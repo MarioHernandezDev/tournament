@@ -1,16 +1,15 @@
 <!-- pages/index.vue -->
 <template>
-  <div class="space-y-12 sm:space-y-16 pb-16 overflow-x-hidden">
+  <div class="pb-16 overflow-x-hidden space-y-0">
     
-    <!-- Hero a Sangre / Fullwidth -->
+    <!-- Hero Fullwidth -->
     <HomeHeroBanner />
 
-    <!-- Contenido Contenido (Torneos Destacados) -->
-    <div class="max-w-[1380px] mx-auto px-4 sm:px-6">
-      <section class="space-y-6">
-        <HomeFeaturedTournaments />
-      </section>
-    </div>
+    <!-- Sección Fullwidth: Valorant & LoL con fondo Blur -->
+    <HomeFeaturedGames />
 
+    <HomeSponsorsRow />
+
+    <HomeFinalCTA />
   </div>
 </template>
