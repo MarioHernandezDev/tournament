@@ -1,39 +1,39 @@
 <template>
-  <header class="sticky top-0 z-50 w-full px-4 sm:px-8 py-3 bg-black/80 backdrop-blur-xl border-b border-zinc-800/80 transition-all">
-    <div class="max-w-[1500px] mx-auto flex items-center justify-between gap-4">
-
-      <!-- LOGO -->
-      <NuxtLink to="/" class="flex items-center gap-3 group shrink-0">
-        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-white via-zinc-400 to-zinc-700 p-0.5 shadow-lg shadow-white/5 group-hover:scale-105 transition-transform">
-          <div class="w-full h-full bg-black rounded-full flex items-center justify-center">
-            <UIcon name="i-heroicons-trophy" class="w-5 h-5 text-white" />
-          </div>
-        </div>
-        <span class="font-['Rajdhani'] text-2xl font-black tracking-widest text-white uppercase">
-          PROJECT<span class="text-zinc-400">GAMING</span>
-        </span>
+  <header class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+    
+    <div class="pointer-events-auto flex items-center gap-3 sm:gap-4 bg-zinc-950/90 border border-zinc-800/80 p-2 pl-2.5 pr-2.5 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-xl transition-all duration-300">
+      
+      <!-- LOGO ARREGLADO (Sin iconos extra, con overflow-hidden) -->
+      <NuxtLink 
+        to="/" 
+        class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-black flex items-center justify-center shrink-0 hover:scale-105 active:scale-95 transition-transform duration-200 shadow-md overflow-hidden"
+      >
+        <img 
+          src="/img/logo.png" 
+          alt="Logo" 
+          class="w-full h-full object-cover"
+        />
       </NuxtLink>
 
-      <!-- NAVEGACIÓN EN CÁPSULA / PÍLDORA -->
-      <nav class="hidden lg:flex items-center gap-1 bg-zinc-900/90 border border-zinc-800/80 p-1.5 rounded-full shadow-inner font-['Rajdhani'] text-sm font-bold tracking-wide">
+      <!-- NAVEGACIÓN CON EFECTO HOVER PÍLDORA -->
+      <nav class="hidden md:flex items-center gap-1 font-['Rajdhani'] text-sm sm:text-base font-bold tracking-wider uppercase">
+        
         <NuxtLink
           to="/"
-          class="px-5 py-2 rounded-full text-zinc-300 hover:text-white hover:bg-zinc-800/60 transition-all"
-          active-class="!text-black !bg-white shadow-md"
+          class="px-5 py-2.5 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-800/60 transition-all duration-200"
+          active-class="!text-white font-extrabold bg-zinc-800/80 shadow-inner"
         >
           Inicio
         </NuxtLink>
 
         <NuxtLink
           to="/instalaciones"
-          class="px-5 py-2 rounded-full text-zinc-300 hover:text-white hover:bg-zinc-800/60 transition-all flex items-center gap-2"
-          active-class="!text-white !bg-zinc-800 border border-zinc-700"
+          class="px-5 py-2.5 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-800/60 transition-all duration-200"
+          active-class="!text-white font-extrabold bg-zinc-800/80 shadow-inner"
         >
-          <UIcon name="i-heroicons-building-storefront" class="w-4 h-4" />
           Instalaciones
         </NuxtLink>
 
-        <!-- TORNEOS CON SUBMENÚ (LOL / VALORANT) -->
         <div
           class="relative"
           @mouseenter="tournamentsMenuOpen = true"
@@ -41,33 +41,37 @@
         >
           <NuxtLink
             to="/torneos"
-            class="px-5 py-2 rounded-full text-zinc-300 hover:text-white hover:bg-zinc-800/60 transition-all flex items-center gap-2"
-            active-class="!text-white !bg-zinc-800 border border-zinc-700"
+            class="px-5 py-2.5 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-800/60 transition-all duration-200 flex items-center gap-1.5 group"
+            active-class="!text-white font-extrabold bg-zinc-800/80 shadow-inner"
           >
-            <UIcon name="i-heroicons-trophy" class="w-4 h-4" />
             Torneos
-            <UIcon name="i-heroicons-chevron-down" class="w-3 h-3 opacity-60" />
+            <UIcon 
+              name="i-heroicons-chevron-down" 
+              class="w-4 h-4 text-zinc-500 group-hover:text-white transition-transform duration-300" 
+              :class="{ 'rotate-180 text-emerald-400': tournamentsMenuOpen }" 
+            />
           </NuxtLink>
 
-          <Transition name="fade">
+          <Transition name="dropdown">
             <div
               v-if="tournamentsMenuOpen"
-              class="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-52"
+              class="absolute top-full left-1/2 -translate-x-1/2 pt-4 w-56 z-50"
             >
-              <div class="rounded-2xl border border-zinc-800/80 bg-zinc-950/95 backdrop-blur-xl shadow-2xl p-1.5 space-y-1">
+              <div class="rounded-3xl border border-zinc-800 bg-zinc-950/95 backdrop-blur-2xl shadow-2xl p-2 space-y-1 overflow-hidden">
                 <NuxtLink
                   to="/torneos/lol"
-                  class="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/70 transition-colors"
+                  class="flex items-center gap-3 px-4 py-3 rounded-2xl text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-200"
                 >
-                  <UIcon name="i-simple-icons-leagueoflegends" class="w-4 h-4 text-cyan-400" />
-                  League of Legends
+                  <UIcon name="i-simple-icons-leagueoflegends" class="w-4 h-4 text-cyan-400 shrink-0" />
+                  <span class="text-sm font-bold tracking-wide">League of Legends</span>
                 </NuxtLink>
+
                 <NuxtLink
                   to="/torneos/valorant"
-                  class="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/70 transition-colors"
+                  class="flex items-center gap-3 px-4 py-3 rounded-2xl text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-200"
                 >
-                  <UIcon name="i-simple-icons-valorant" class="w-4 h-4 text-red-500" />
-                  Valorant
+                  <UIcon name="i-simple-icons-valorant" class="w-4 h-4 text-rose-500 shrink-0" />
+                  <span class="text-sm font-bold tracking-wide">Valorant</span>
                 </NuxtLink>
               </div>
             </div>
@@ -76,72 +80,54 @@
 
         <NuxtLink
           to="/ranks"
-          class="px-5 py-2 rounded-full text-zinc-300 hover:text-white hover:bg-zinc-800/60 transition-all flex items-center gap-2"
-          active-class="!text-white !bg-zinc-800 border border-zinc-700"
+          class="px-5 py-2.5 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-800/60 transition-all duration-200"
+          active-class="!text-white font-extrabold bg-zinc-800/80 shadow-inner"
         >
-          <UIcon name="i-heroicons-chart-bar" class="w-4 h-4" />
           Ranking
         </NuxtLink>
+
       </nav>
 
-      <!-- BOTONES DE ACCIÓN (PÍLDORAS) -->
-      <div class="flex items-center gap-3 shrink-0">
-        <!-- INVITADO: SIN SESIÓN -->
+      <!-- BOTÓN PÍLDORA BLANCA DERECHA -->
+      <div class="shrink-0 flex items-center">
+        
         <template v-if="!isLoggedIn">
           <NuxtLink
-            to="/login"
-            class="hidden sm:inline-flex items-center justify-center rounded-full font-['Rajdhani'] font-bold text-sm text-zinc-300 hover:text-white hover:bg-zinc-800/60 px-5 py-2 transition-colors"
+            to="/admin"
+            class="px-6 py-2.5 rounded-full bg-white hover:bg-zinc-200 text-zinc-950 font-['Rajdhani'] font-black text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 hover:scale-105 active:scale-95 shadow-md flex items-center gap-2"
           >
-            Iniciar Sesión
-          </NuxtLink>
-
-          <NuxtLink
-            to="/register"
-            class="inline-flex items-center justify-center rounded-full bg-white hover:bg-zinc-200 text-black font-['Rajdhani'] font-black text-sm uppercase tracking-wider px-6 py-2 shadow-lg shadow-white/10 transition-all active:scale-95"
-          >
-            Registrarse
+            <span>Iniciar Sesión</span>
           </NuxtLink>
         </template>
 
-        <!-- CON SESIÓN: AVATAR / PILL -->
         <NuxtLink
           v-else
           :to="user.role === 'admin' ? '/admin' : '/perfil'"
-          class="group inline-flex items-center gap-2.5 rounded-full bg-zinc-900/90 border border-zinc-800/80 hover:border-zinc-600 pl-2 pr-4 py-1.5 transition-all"
+          class="px-4 py-1.5 sm:px-5 sm:py-2 rounded-full bg-white hover:bg-zinc-100 text-zinc-950 font-['Rajdhani'] transition-all duration-200 hover:scale-105 active:scale-95 shadow-md flex items-center gap-3 group"
         >
-          <img :src="user.avatar" :alt="user.name" class="w-7 h-7 rounded-full object-cover border border-zinc-700">
-          <span class="font-['Rajdhani'] font-bold text-sm text-zinc-200 group-hover:text-white transition-colors leading-none">
-            {{ user.name.split(' ')[0] }}
-          </span>
-          <span
-            class="px-2 py-0.5 rounded-full text-[9px] font-mono font-bold uppercase tracking-wider"
-            :class="user.role === 'admin' ? 'bg-amber-400/15 text-amber-300' : 'bg-cyan-400/10 text-cyan-300'"
+          <img 
+            :src="user.avatar" 
+            :alt="user.name" 
+            class="w-7 h-7 rounded-full object-cover border border-zinc-300"
           >
-            {{ user.role }}
+          <span class="font-extrabold text-xs sm:text-sm text-zinc-950 lowercase tracking-normal">
+            {{ user.email || user.name.toLowerCase().replace(/\s+/g, '') + '@gmail.com' }}
           </span>
         </NuxtLink>
+
+        <!-- BOTÓN MÓVIL -->
+        <button 
+          @click="mobileMenuOpen = !mobileMenuOpen"
+          class="md:hidden ml-1 p-2.5 rounded-full text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-200"
+          aria-label="Toggle menu"
+        >
+          <UIcon :name="mobileMenuOpen ? 'i-heroicons-x-mark' : 'i-heroicons-bars-3'" class="w-6 h-6" />
+        </button>
+
       </div>
 
     </div>
+
+    <!-- MENÚ MÓVIL DESPLEGABLE... (sin cambios) -->
   </header>
 </template>
-
-<script setup>
-// TODO Supabase: sustituir useAuthMock() por useSupabaseUser() + una consulta a `profiles`
-// para conocer el rol real (player/admin) del usuario autenticado.
-const { user, isLoggedIn } = useAuthMock()
-
-const tournamentsMenuOpen = ref(false)
-</script>
-
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.15s ease, transform 0.15s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-  transform: translate(-50%, -4px);
-}
-</style>

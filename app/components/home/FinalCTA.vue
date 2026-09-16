@@ -1,5 +1,5 @@
 <template>
-  <section class="relative w-full py-24 sm:py-36 overflow-hidden bg-black border-t border-zinc-800/60 text-center">
+  <section class="relative w-full py-24 sm:py-36 overflow-hidden bg-black  text-center">
     
     <!-- IMAGEN DE FONDO A PANTALLA COMPLETA CON OVERLAY -->
     <div class="absolute inset-0 z-0 select-none pointer-events-none">
@@ -23,12 +23,12 @@
       
       <!-- TITULAR IMPACTANTE EN ESCALA DE GRISES -->
       <h2 class="font-['Rajdhani'] text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight text-white leading-none">
-        Demuestra De Qué Estás Hecho En <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-300 to-zinc-500">El Campo De Batalla</span>
+        Ven y disfruta en <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-300 to-zinc-500">el ciber de Granada</span>
       </h2>
 
       <!-- DESCRIPCIÓN -->
       <p class="text-base sm:text-lg text-zinc-300 max-w-2xl mx-auto font-normal leading-relaxed">
-        Únete a miles de jugadores, compite en torneos semanales con premios en metálico y escala en el ranking de la comunidad.
+        Únete a jugadores, compite en torneos y escala en el ranking de la comunidad, siempre con nosotros.
       </p>
 
       <!-- BOTONES DE ACCIÓN (MONOCROMO) -->
@@ -39,7 +39,7 @@
           to="/instalaciones"
           class="group relative inline-flex items-center justify-center gap-3 px-10 py-5 rounded-full bg-white hover:bg-zinc-200 text-black font-['Rajdhani'] font-black text-lg uppercase tracking-wider transition-all duration-300 shadow-xl shadow-white/10 w-full sm:w-auto"
         >
-          <span>Apúntate a un PC ahora</span>
+          <span>Reserva</span>
           <UIcon name="i-heroicons-arrow-right" class="w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />
         </NuxtLink>
 
@@ -51,7 +51,7 @@
           class="inline-flex items-center justify-center gap-3 px-10 py-5 rounded-full bg-emerald-500/10 border border-emerald-500/40 text-emerald-400 font-['Rajdhani'] font-extrabold text-lg uppercase tracking-wider backdrop-blur-md hover:bg-emerald-500 hover:text-black hover:border-emerald-400 transition-all duration-300 w-full sm:w-auto"
         >
           <UIcon name="i-simple-icons-whatsapp" class="w-6 h-6" />
-          <span>Escríbenos por WhatsApp</span>
+          <span>WhatsApp</span>
         </a>
 
         <!-- Botón Secundario Glass Neutro -->

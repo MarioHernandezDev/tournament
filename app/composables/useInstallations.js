@@ -5,7 +5,11 @@ const seedGallery = () => [
   { id: 1, src: '/img/ezreal.png', alt: 'Zona gaming principal' },
   { id: 2, src: '/img/chamber.png', alt: 'Puesto de Valorant' },
   { id: 3, src: '/img/lol-hero.png', alt: 'Puesto de League of Legends' },
-  { id: 4, src: '/img/valorant-hero.png', alt: 'Sala de torneos' }
+  { id: 4, src: '/img/valorant-hero.png', alt: 'Sala de torneos' },
+  { id: 5, src: '/img/ezreal.png', alt: 'Zona VIP & Streaming' },
+  { id: 6, src: '/img/chamber.png', alt: 'Simuladores Cockpit' },
+  { id: 7, src: '/img/lol-hero.png', alt: 'Zona Consolas PlayStation 5' },
+  { id: 8, src: '/img/valorant-hero.png', alt: 'Recepción & Lounge Area' }
 ]
 
 const seedSpecs = () => [
@@ -42,8 +46,8 @@ const seedSpecs = () => [
 ]
 
 const seedLocation = () => ({
-  address: 'Calle Example 123, Madrid, España',
-  mapEmbedUrl: 'https://www.google.com/maps?q=Madrid&output=embed',
+  address: 'Calle Periodista Fernando Gómez de la Cruz 2, Granada, España',
+  mapEmbedUrl: 'https://www.google.com/maps?q=Calle+Periodista+Fernando+Gómez+de+la+Cruz+2+Granada&output=embed',
   shortHours: 'Lun-Jue 16:00-23:00 · Vie-Dom 11:00-02:00',
   phone: '+34 600 000 000'
 })

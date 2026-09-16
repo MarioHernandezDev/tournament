@@ -16,9 +16,7 @@
     <!-- Redes Sociales -->
     <HomeSocialMedia />
 
-    <!-- Reseñas -->
-    <HomeReviews />
 
-    <HomeFinalCTA />
+
   </div>
 </template>

@@ -1,44 +1,72 @@
 <template>
-  <section class="max-w-[1380px] mx-auto px-4 sm:px-6 py-16 sm:py-20">
-    <div class="flex flex-col items-center text-center mb-12 space-y-3">
-      <span class="text-xs font-mono uppercase tracking-[0.3em] text-zinc-500">Comunidad</span>
-      <h2 class="font-['Rajdhani'] text-3xl sm:text-5xl font-black uppercase tracking-tight text-white">
-        Síguenos En Redes
-      </h2>
+  <section class="w-full relative overflow-hidden bg-zinc-950 border-t border-zinc-900 py-40 sm:py-56 lg:py-64">
+    
+    <!-- FOTO DE FONDO FULLWIDTH (Ambiente de la arena / Evento / Torneo) -->
+    <div class="absolute inset-0 z-0">
+      <img 
+        src="/img/lol-hero.png" 
+        alt="Gaming Project Arena Community" 
+        class="w-full h-full object-cover object-center filter brightness-50 contrast-125 scale-105"
+      />
+      <!-- Capas de degradado para integrarlo al tema negro eSports -->
+      <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/80" />
+      <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-      <a
-        v-for="social in socials"
-        :key="social.id"
-        :href="social.url"
-        target="_blank"
-        rel="noopener"
-        class="group relative overflow-hidden rounded-2xl border border-zinc-800/80 bg-zinc-950 p-6 flex flex-col items-start gap-4 hover:border-zinc-600 transition-all duration-300"
-      >
-        <div class="w-12 h-12 rounded-2xl bg-zinc-900 border border-zinc-800/80 flex items-center justify-center text-zinc-300 group-hover:text-white group-hover:scale-105 transition-all">
-          <UIcon :name="social.icon" class="w-6 h-6" />
-        </div>
+    <!-- Textura de cuadrícula sutil -->
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#18181b_1px,transparent_1px),linear-gradient(to_bottom,#18181b_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-25 pointer-events-none z-0" />
 
-        <div class="space-y-0.5">
-          <p class="font-['Rajdhani'] font-black text-lg text-white uppercase tracking-wide">{{ social.label }}</p>
-          <p class="text-xs text-zinc-500 font-mono">{{ social.handle }}</p>
-        </div>
+    <!-- CONTENIDO CENTRALIZADO MONUMENTAL -->
+    <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center space-y-8">
 
-        <div class="mt-auto pt-2 w-full flex items-center justify-between border-t border-zinc-900">
-          <span class="text-sm font-bold text-zinc-200 pt-3">{{ formatFollowers(social.followers) }}</span>
-          <UIcon name="i-heroicons-arrow-up-right" class="w-4 h-4 text-zinc-600 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all mt-3" />
-        </div>
-      </a>
+      <!-- TÍTULO MONUMENTAL -->
+      <div class="space-y-4">
+        <h2 class="font-['Rajdhani'] text-5xl sm:text-7xl lg:text-8xl font-black uppercase tracking-tight text-white leading-none">
+          ÚNETE A LA ARENA
+        </h2>
+        <p class="text-zinc-300 max-w-xl mx-auto text-sm sm:text-base font-sans font-light leading-relaxed">
+          Forma parte de la mayor comunidad gaming de Granada. Enterate de torneos, busca equipo en Discord o echa un vistazo al ambiente en nuestro Instagram.
+        </p>
+      </div>
+
+      <!-- BOTONES DE ACCIÓN (INSTAGRAM & DISCORD) -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+        
+        <!-- BOTÓN INSTAGRAM -->
+        <a 
+          href="https://www.instagram.com/gamingproject.es/" 
+          target="_blank" 
+          rel="noopener"
+          class="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-white text-black font-['Rajdhani'] font-black text-sm uppercase tracking-wider hover:bg-gradient-to-r hover:from-amber-500 hover:via-rose-500 hover:to-purple-600 hover:text-white transition-all duration-300 shadow-2xl"
+        >
+          <div class="w-6 h-6 rounded-full bg-black/10 group-hover:bg-white/20 flex items-center justify-center transition-colors">
+            <UIcon name="i-simple-icons-instagram" class="w-3.5 h-3.5" />
+          </div>
+          <span>INSTAGRAM @gamingproject.es</span>
+          <span class="text-base group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">&nearr;</span>
+        </a>
+
+        <!-- BOTÓN DISCORD -->
+        <a 
+          href="https://discord.gg/gamingproject" 
+          target="_blank" 
+          rel="noopener"
+          class="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-zinc-900/80 border border-zinc-700/80 text-white font-['Rajdhani'] font-black text-sm uppercase tracking-wider hover:bg-indigo-600 hover:border-indigo-500 backdrop-blur-md transition-all duration-300 shadow-2xl"
+        >
+          <div class="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center">
+            <UIcon name="i-simple-icons-discord" class="w-3.5 h-3.5" />
+          </div>
+          <span>SERVIDOR DE DISCORD</span>
+          <span class="text-base group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">&nearr;</span>
+        </a>
+
+      </div>
+
     </div>
+
   </section>
 </template>
 
 <script setup>
-const socials = useSocialStats()
-
-const formatFollowers = (n) => {
-  if (n >= 1000) return `${(n / 1000).toFixed(1).replace('.0', '')}k seguidores`
-  return `${n} seguidores`
-}
+// No requiere lógica adicional
 </script>
