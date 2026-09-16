@@ -33,20 +33,31 @@
 
       <!-- BOTONES DE ACCIÓN (MONOCROMO) -->
       <div class="flex flex-col sm:flex-row items-center justify-center gap-5 pt-6">
-        
-        <!-- Botón Principal Blanco -->
-        <NuxtLink 
-          to="/register" 
+
+        <!-- Botón Principal: Reservar PC -->
+        <NuxtLink
+          to="/instalaciones"
           class="group relative inline-flex items-center justify-center gap-3 px-10 py-5 rounded-full bg-white hover:bg-zinc-200 text-black font-['Rajdhani'] font-black text-lg uppercase tracking-wider transition-all duration-300 shadow-xl shadow-white/10 w-full sm:w-auto"
         >
-          <span>Unirme Ahora</span>
+          <span>Apúntate a un PC ahora</span>
           <UIcon name="i-heroicons-arrow-right" class="w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />
         </NuxtLink>
 
+        <!-- Botón WhatsApp -->
+        <a
+          href="https://wa.me/34600000000"
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center justify-center gap-3 px-10 py-5 rounded-full bg-emerald-500/10 border border-emerald-500/40 text-emerald-400 font-['Rajdhani'] font-extrabold text-lg uppercase tracking-wider backdrop-blur-md hover:bg-emerald-500 hover:text-black hover:border-emerald-400 transition-all duration-300 w-full sm:w-auto"
+        >
+          <UIcon name="i-simple-icons-whatsapp" class="w-6 h-6" />
+          <span>Escríbenos por WhatsApp</span>
+        </a>
+
         <!-- Botón Secundario Glass Neutro -->
-        <a 
-          href="https://discord.gg" 
-          target="_blank" 
+        <a
+          href="https://discord.gg"
+          target="_blank"
           rel="noopener"
           class="inline-flex items-center justify-center gap-3 px-10 py-5 rounded-full bg-zinc-900/80 border border-zinc-700/80 text-zinc-200 font-['Rajdhani'] font-extrabold text-lg uppercase tracking-wider backdrop-blur-md hover:bg-zinc-800 hover:text-white hover:border-zinc-500 transition-all duration-300 w-full sm:w-auto"
         >
@@ -56,13 +67,68 @@
 
       </div>
 
+      <!-- FORMULARIO DE CONTACTO (SOLO UI, SIN BACKEND) -->
+      <div class="pt-14 max-w-xl mx-auto text-left">
+        <div class="rounded-3xl border border-zinc-800/80 bg-zinc-950/90 backdrop-blur-md p-6 sm:p-8 space-y-5">
+          <h3 class="font-['Rajdhani'] text-xl sm:text-2xl font-black uppercase tracking-wide text-white text-center">
+            ¿Tienes dudas? Escríbenos
+          </h3>
+
+          <form class="space-y-4" @submit.prevent="handleContactSubmit">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <input
+                v-model="contactForm.name"
+                type="text"
+                placeholder="Tu nombre"
+                required
+                class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-zinc-500"
+              >
+              <input
+                v-model="contactForm.email"
+                type="email"
+                placeholder="Tu email"
+                required
+                class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-zinc-500"
+              >
+            </div>
+            <textarea
+              v-model="contactForm.message"
+              rows="3"
+              placeholder="Cuéntanos en qué podemos ayudarte..."
+              required
+              class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-zinc-500 resize-none"
+            />
+
+            <button
+              type="submit"
+              class="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-white hover:bg-zinc-200 text-black font-['Rajdhani'] font-black text-sm uppercase tracking-wider transition-all"
+            >
+              <UIcon v-if="contactSent" name="i-heroicons-check-circle" class="w-4 h-4" />
+              {{ contactSent ? 'Mensaje Enviado' : 'Enviar Mensaje' }}
+            </button>
+          </form>
+        </div>
+      </div>
+
     </div>
 
   </section>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
+
+// TODO Supabase: sustituir por un INSERT en la tabla `contact_messages` (name, email, message, created_at)
+const contactForm = reactive({ name: '', email: '', message: '' })
+const contactSent = ref(false)
+
+const handleContactSubmit = () => {
+  contactSent.value = true
+  contactForm.name = ''
+  contactForm.email = ''
+  contactForm.message = ''
+  setTimeout(() => { contactSent.value = false }, 2500)
+}
 
 const ctaCanvas = ref(null)
 let animationFrameId = null

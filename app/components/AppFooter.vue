@@ -22,7 +22,7 @@
               <UIcon name="i-heroicons-trophy" class="w-6 h-6" />
             </div>
             <span class="font-['Rajdhani'] font-black text-3xl tracking-wider text-white uppercase">
-              NEXUS<span class="text-zinc-500">ARENA</span>
+              PROJECT<span class="text-zinc-500">GAMING</span>
             </span>
           </NuxtLink>
 
@@ -38,17 +38,22 @@
           </h3>
           <ul class="space-y-3 text-base">
             <li>
-              <NuxtLink to="/valorant" class="hover:text-white transition-colors duration-200">
+              <NuxtLink to="/torneos/valorant" class="hover:text-white transition-colors duration-200">
                 Valorant
               </NuxtLink>
             </li>
             <li>
-              <NuxtLink to="/league-of-legends" class="hover:text-white transition-colors duration-200">
+              <NuxtLink to="/torneos/lol" class="hover:text-white transition-colors duration-200">
                 League of Legends
               </NuxtLink>
             </li>
             <li>
-              <NuxtLink to="/rankings" class="hover:text-white transition-colors duration-200">
+              <NuxtLink to="/instalaciones" class="hover:text-white transition-colors duration-200">
+                Instalaciones
+              </NuxtLink>
+            </li>
+            <li>
+              <NuxtLink to="/ranks" class="hover:text-white transition-colors duration-200">
                 Rankings Globales
               </NuxtLink>
             </li>
@@ -100,7 +105,7 @@
 
       <!-- COPYRIGHT Y PIE INFERIOR -->
       <div class="border-t border-zinc-800/60 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-zinc-500 font-normal">
-        <p>© 2026 Nexus Arena. Todos los derechos reservados.</p>
+        <p>© 2026 Project Gaming. Todos los derechos reservados.</p>
         <p class="text-xs text-zinc-600">
           No afiliado con Riot Games ni desarrolladores oficiales.
         </p>

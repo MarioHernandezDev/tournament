@@ -17,6 +17,7 @@
       <UserDashboardSummary game="valorant" />
       <TournamentTabs game="valorant" />
       <MonthlyRankingTable game="valorant" />
+      <TournamentsMatchCalendar game="valorant" />
     </div>
   </div>
 </template>

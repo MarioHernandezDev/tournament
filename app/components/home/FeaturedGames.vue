@@ -5,8 +5,8 @@
     <div class="grid grid-cols-1 md:grid-cols-2 w-full">
       
       <!-- BLOQUE 1: VALORANT -->
-      <NuxtLink 
-        to="/valorant"
+      <NuxtLink
+        to="/torneos/valorant"
         class="group relative w-full h-[450px] sm:h-[550px] lg:h-[650px] overflow-hidden text-left block"
       >
         <!-- Imagen a pantalla completa -->
@@ -42,8 +42,8 @@
       </NuxtLink>
 
       <!-- BLOQUE 2: LEAGUE OF LEGENDS -->
-      <NuxtLink 
-        to="/lol"
+      <NuxtLink
+        to="/torneos/lol"
         class="group relative w-full h-[450px] sm:h-[550px] lg:h-[650px] overflow-hidden text-left block"
       >
         <!-- Imagen a pantalla completa -->
@@ -80,5 +80,40 @@
 
     </div>
 
+    <!-- FRANJA DE PROMOS ACTIVAS -->
+    <div class="max-w-[1380px] mx-auto px-4 sm:px-6 py-14 sm:py-16">
+      <div class="flex items-center gap-3 mb-8">
+        <UIcon name="i-heroicons-sparkles" class="w-5 h-5 text-amber-400" />
+        <h3 class="font-['Rajdhani'] text-2xl sm:text-3xl font-black uppercase tracking-wider text-white">
+          Promos Activas
+        </h3>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <div
+          v-for="promo in promos"
+          :key="promo.id"
+          class="rounded-2xl border border-zinc-800/80 bg-zinc-950 p-6 space-y-4"
+        >
+          <div class="flex items-center justify-between">
+            <div class="w-11 h-11 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center">
+              <UIcon :name="promo.icon" class="w-5 h-5 text-amber-400" />
+            </div>
+            <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wide bg-zinc-900 text-zinc-400">
+              {{ promo.badge }}
+            </span>
+          </div>
+          <div class="space-y-1.5">
+            <h4 class="font-['Rajdhani'] font-black text-lg text-white uppercase leading-tight">{{ promo.title }}</h4>
+            <p class="text-sm text-zinc-400 leading-relaxed">{{ promo.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </section>
 </template>
+
+<script setup>
+const promos = usePromos()
+</script>

@@ -20,7 +20,7 @@ export default defineNuxtConfig({
     redirectOptions: {
       login: '/login',
       callback: '/confirm',
-      exclude: ['/', '/torneos/*']
+      exclude: ['/', '/torneos', '/torneos/*', '/instalaciones', '/ranks', '/about']
     }
   },
 
@@ -36,9 +36,9 @@ export default defineNuxtConfig({
   // Opciones de App / Head (Meta etiquetas para SEO)
   app: {
     head: {
-      title: 'Torneos eSports | Valorant & League of Legends',
+      title: 'Project Gaming | Torneos de Valorant & League of Legends',
       meta: [
-        { name: 'description', content: 'Plataforma de torneos competitivos de Valorant y LoL.' },
+        { name: 'description', content: 'Project Gaming: local gaming y plataforma de torneos competitivos de Valorant y League of Legends.' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' }
       ],
       link: [

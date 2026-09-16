@@ -38,8 +38,8 @@
 
           <!-- BOTÓN PRINCIPAL TAMAÑO CTA -->
           <div class="flex items-center justify-center sm:justify-start gap-3 pt-2">
-            <NuxtLink 
-              to="/valorant" 
+            <NuxtLink
+              to="/torneos"
               class="group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-white hover:bg-zinc-200 text-black font-['Rajdhani'] font-black text-lg uppercase tracking-wider transition-all duration-300 shadow-xl shadow-white/10 w-full sm:w-auto"
             >
               <span>Crear Torneo</span>
@@ -89,6 +89,7 @@ const blackHoleCanvas = ref(null)
 
 let THREE, renderer, scene, camera, animFrameId
 let rtScene, rtA, rtB, matSim, matBright, matBlur, matComp, mesh
+let io, isVisible = true, isTabVisible = true, reduceMotion = false
 
 const GLSL_COMMON = `
   vec3 decode(vec3 e){ e = min(e, vec3(0.996)); return e / (1.0 - e); }
@@ -286,6 +287,10 @@ async function initThree() {
   const canvas = blackHoleCanvas.value
   if (!canvas) return
 
+  // Respeta accesibilidad y evita gastar GPU si el usuario prefiere menos movimiento
+  reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (reduceMotion) return
+
   // Importación dinámica para evitar ralentizar la carga inicial de la página
   THREE = await import('three')
 
@@ -294,7 +299,9 @@ async function initThree() {
   const height = parent.clientHeight
 
   renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' })
-  renderer.setPixelRatio(0.75) // Renderizado a resolución optimizada
+  // Menor resolución interna en pantallas pequeñas/móviles para aliviar la GPU
+  const isMobile = width < 768
+  renderer.setPixelRatio(isMobile ? 0.5 : 0.75)
   renderer.setSize(width, height)
 
   scene = new THREE.Scene()
@@ -308,7 +315,7 @@ async function initThree() {
     uPitch: { value: pitch },
     uVel: { value: 1.45 },
     uTemp: { value: 0.76 },
-    uPasos: { value: 80.0 }
+    uPasos: { value: width < 768 ? 40.0 : 56.0 }
   }
 
   uBright = { tSrc: { value: null } }
@@ -359,6 +366,9 @@ function onResize() {
 function animate(time) {
   animFrameId = requestAnimationFrame(animate)
 
+  // No renderizar si la sección no está visible en pantalla o la pestaña está oculta
+  if (!isVisible || !isTabVisible) return
+
   yaw += 0.0015 // Movimiento orbital suave continuo
 
   uSim.uTime.value = time * 0.001
@@ -393,13 +403,33 @@ function animate(time) {
   renderer.render(scene, camera)
 }
 
+function handleVisibilityChange() {
+  isTabVisible = document.visibilityState === 'visible'
+}
+
 onMounted(() => {
-  initThree()
+  // Pausa el renderizado cuando el hero sale del viewport (ej. al hacer scroll)
+  io = new IntersectionObserver(
+    ([entry]) => { isVisible = entry.isIntersecting },
+    { threshold: 0 }
+  )
+  if (blackHoleCanvas.value) io.observe(blackHoleCanvas.value)
+
+  document.addEventListener('visibilitychange', handleVisibilityChange)
+
+  // Deja que el navegador termine el primer pintado antes de arrancar WebGL
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(() => initThree(), { timeout: 1500 })
+  } else {
+    setTimeout(initThree, 200)
+  }
 })
 
 onBeforeUnmount(() => {
   if (animFrameId) cancelAnimationFrame(animFrameId)
   window.removeEventListener('resize', onResize)
+  document.removeEventListener('visibilitychange', handleVisibilityChange)
+  if (io) io.disconnect()
   if (renderer) renderer.dispose()
 })
 </script>

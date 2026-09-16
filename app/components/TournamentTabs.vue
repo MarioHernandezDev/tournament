@@ -90,9 +90,11 @@
 
           <div class="p-5 space-y-4">
             <div>
-              <h3 class="font-['Rajdhani'] text-xl font-black uppercase text-white leading-tight">
-                {{ tournament.name }}
-              </h3>
+              <NuxtLink :to="detailLink(tournament)" class="hover:underline decoration-zinc-600 underline-offset-2">
+                <h3 class="font-['Rajdhani'] text-xl font-black uppercase text-white leading-tight">
+                  {{ tournament.name }}
+                </h3>
+              </NuxtLink>
               <p class="text-xs text-zinc-500 mt-1">{{ tournament.format }} &middot; {{ formatDate(tournament.startDate) }}</p>
             </div>
 
@@ -114,16 +116,26 @@
               </div>
             </div>
 
-            <button
-              type="button"
-              class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full font-['Rajdhani'] font-black text-sm uppercase tracking-wider transition-all duration-300 disabled:cursor-not-allowed"
-              :class="registerButtonClass(tournament)"
-              :disabled="isFull(tournament) && !isRegistered(tournament)"
-              @click="toggleRegistration(tournament)"
-            >
-              <UIcon :name="registerButtonIcon(tournament)" class="w-4 h-4" />
-              {{ registerButtonLabel(tournament) }}
-            </button>
+            <div class="flex items-center gap-2">
+              <button
+                type="button"
+                class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full font-['Rajdhani'] font-black text-sm uppercase tracking-wider transition-all duration-300 disabled:cursor-not-allowed"
+                :class="registerButtonClass(tournament)"
+                :disabled="isFull(tournament) && !isRegistered(tournament)"
+                @click="toggleRegistration(tournament)"
+              >
+                <UIcon :name="registerButtonIcon(tournament)" class="w-4 h-4" />
+                {{ registerButtonLabel(tournament) }}
+              </button>
+
+              <NuxtLink
+                :to="detailLink(tournament)"
+                class="shrink-0 inline-flex items-center justify-center w-11 h-11 rounded-full border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-600 transition-colors"
+                title="Ver bracket y detalles"
+              >
+                <UIcon name="i-heroicons-squares-2x2" class="w-4 h-4" />
+              </NuxtLink>
+            </div>
           </div>
         </article>
       </div>
@@ -178,6 +190,14 @@
                 <span class="text-zinc-400">{{ tournament.prizeDistributed }}</span>
               </div>
             </div>
+
+            <NuxtLink
+              :to="detailLink(tournament)"
+              class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-zinc-400 hover:text-white transition-colors"
+            >
+              <UIcon name="i-heroicons-squares-2x2" class="w-3.5 h-3.5" />
+              Ver bracket final
+            </NuxtLink>
           </div>
         </article>
       </div>
@@ -202,6 +222,8 @@ const props = defineProps({
 const gameConfig = useGameConfig(props.game)
 const theme = useGameTheme(gameConfig.theme)
 const { upcomingByGame, completedByGame } = useTournaments()
+
+const detailLink = (tournament) => `/torneos/${tournament.game}/${tournament.id}`
 
 const upcoming = upcomingByGame(props.game)
 const completed = completedByGame(props.game)

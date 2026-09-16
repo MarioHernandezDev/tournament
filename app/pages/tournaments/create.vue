@@ -299,6 +299,6 @@ const handleSubmit = () => {
     prizePool: form.prizePool.trim()
   })
 
-  navigateTo(`/${gameId.value}`)
+  navigateTo(`/torneos/${gameId.value}`)
 }
 </script>

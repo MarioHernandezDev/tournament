@@ -18,6 +18,7 @@
       <UserDashboardSummary game="lol" />
       <TournamentTabs game="lol" />
       <MonthlyRankingTable game="lol" />
+      <TournamentsMatchCalendar game="lol" />
     </div>
   </div>
 </template>
