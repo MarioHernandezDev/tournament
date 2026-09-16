@@ -2,10 +2,12 @@
   <div>
     <!-- HERO FULLWIDTH (Fuera del contenedor centrado) -->
     <MiniHero
-      title="Torneos de Lolete"
+      title="Torneos de League"
+            bg-text="league of legends"
+
       description="Forja tu leyenda en la Grieta del Invocador. Compite en torneos 5v5, demuestra tu nivel estratégico y escala posiciones."
       icon-name="i-simple-icons-leagueoflegends"
-      bg-image="/img/lol-hero.png"
+      bg-image="/img/ezreal.png"
       theme="blue"
       button-text="Crear Torneo LoL"
       button-link="/tournaments/create?game=lol"

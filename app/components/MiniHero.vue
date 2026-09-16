@@ -1,45 +1,48 @@
 <template>
-  <section class="relative w-full overflow-hidden bg-black border-b border-zinc-800/80 pt-12 pb-16 lg:py-20 min-h-[500px] lg:min-h-[580px] flex items-center">
+  <section class="relative w-full overflow-hidden bg-black pt-16 pb-20 lg:py-24 min-h-[640px] lg:min-h-[720px] flex items-center">
     
-    <!-- CANVAS CON ANIMACIÓN DE PARTÍCULAS -->
+    <!-- CAPA 0 (z-0): CANVAS CON ANIMACIÓN DE PARTÍCULAS -->
     <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
       <canvas ref="heroCanvas" class="w-full h-full block opacity-60"></canvas>
     </div>
 
-    <!-- ILUSTRACIÓN / RENDER 3D (MÁS VISIBLE Y MÁS GRANDE) -->
-    <div class="absolute inset-y-0 right-0 z-10 w-full md:w-4/5 lg:w-2/3 pointer-events-none select-none overflow-hidden flex items-center justify-end">
+    <!-- CAPA 10 (z-10): TEXTO COLOSAL DE FONDO -->
+    <div class="absolute inset-0 z-10 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+      <h1 
+        class="w-full text-center font-['Rajdhani'] font-black uppercase text-[20vw] sm:text-[22vw] lg:text-[24vw] leading-none tracking-tighter opacity-35 whitespace-nowrap transition-all"
+        :class="bgTextGlowClass"
+      >
+        {{ bgText || title }}
+      </h1>
+    </div>
+
+    <!-- CAPA 20 (z-20): PERSONAJE PNG (LIMPIO Y SIN CAPAS NEGRAS ENCIMA) -->
+    <div class="absolute inset-y-0 right-0 z-20 w-full md:w-3/4 lg:w-3/5 pointer-events-none select-none overflow-hidden flex items-end justify-end">
       <img 
         :src="bgImage" 
         :alt="title" 
-        class="h-full w-auto max-w-none object-contain object-right filter brightness-105 contrast-110 drop-shadow-[0_0_50px_rgba(0,0,0,0.8)] [mask-image:linear-gradient(to_left,black_70%,transparent_100%)] scale-110 translate-x-6 sm:translate-x-0 transition-transform duration-700"
+        class="h-full w-auto max-w-none object-contain object-bottom object-right filter brightness-105 contrast-105 drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)] scale-100 transition-transform duration-700"
       />
-      <!-- Degradados suaves para integrarlo con el fondo sin opacar el personaje -->
-      <div class="absolute inset-0 bg-gradient-to-r from-black via-black/60 sm:via-black/30 to-transparent" />
-      <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40" />
     </div>
 
-    <!-- CONTENIDO DEL MINIHERO -->
-    <div class="relative z-20 max-w-[1380px] mx-auto w-full px-6 sm:px-10 lg:px-12">
+    <!-- CAPA 30 (z-30): CONTENIDO PRINCIPAL (TEXTO Y BOTONES) -->
+    <div class="relative z-30 max-w-[1380px] mx-auto w-full px-6 sm:px-10 lg:px-12">
       <div class="max-w-xl space-y-6">
         
-        <!-- TAG BADGE CATEGORÍA -->
-
         <!-- TITULAR E ICONO -->
         <div class="space-y-4">
-          <h1 class="font-['Rajdhani'] text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight text-white leading-none flex items-center gap-4">
+          <h2 class="font-['Rajdhani'] text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight text-white leading-none flex items-center gap-4 drop-shadow-2xl">
             <UIcon :name="iconName" :class="colorIconClass" />
             <span>{{ title }}</span>
-          </h1>
+          </h2>
           
-          <p class="text-zinc-300 text-base sm:text-lg leading-relaxed font-normal max-w-lg">
+          <p class="text-zinc-300 text-base sm:text-lg leading-relaxed font-normal max-w-lg drop-shadow-md">
             {{ description }}
           </p>
         </div>
 
-        <!-- BOTONES DE ACCIÓN (CREAR Y UNIRSE) -->
+        <!-- BOTONES DE ACCIÓN -->
         <div class="pt-2 flex flex-wrap items-center gap-4">
-          
-          <!-- Botón Secundario: Unirse a Torneo -->
           <a 
             :href="secondaryButtonLink" 
             class="group inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full font-['Rajdhani'] font-black text-base uppercase tracking-wider text-white bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-700 hover:border-zinc-500 transition-all duration-300 shadow-lg backdrop-blur-md"
@@ -48,7 +51,6 @@
             <span>{{ secondaryButtonText }}</span>
           </a>
 
-          <!-- Botón Principal: Crear Torneo -->
           <NuxtLink 
             :to="buttonLink" 
             :class="buttonClass"
@@ -56,7 +58,6 @@
             <UIcon name="i-heroicons-plus-circle" class="w-5 h-5" />
             <span>{{ buttonText }}</span>
           </NuxtLink>
-
         </div>
 
       </div>
@@ -72,6 +73,10 @@ const props = defineProps({
   title: {
     type: String,
     required: true
+  },
+  bgText: {
+    type: String,
+    default: ''
   },
   description: {
     type: String,
@@ -108,6 +113,16 @@ const props = defineProps({
   }
 })
 
+// Brillo y color del texto colosal
+const bgTextGlowClass = computed(() => {
+  switch (props.theme) {
+    case 'red': return 'text-red-500 drop-shadow-[0_0_80px_rgba(239,68,68,0.4)]'
+    case 'blue': return 'text-cyan-400 drop-shadow-[0_0_80px_rgba(34,211,238,0.4)]'
+    case 'gold': return 'text-amber-400 drop-shadow-[0_0_80px_rgba(251,191,36,0.4)]'
+    default: return 'text-white'
+  }
+})
+
 const colorIconClass = computed(() => {
   const base = 'w-10 h-10 sm:w-14 sm:h-14 shrink-0 '
   switch (props.theme) {
@@ -128,7 +143,7 @@ const buttonClass = computed(() => {
   }
 })
 
-// Animación de partículas Canvas
+// Canvas Partículas
 const heroCanvas = ref(null)
 let animationFrameId = null
 

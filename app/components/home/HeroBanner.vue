@@ -12,7 +12,7 @@
       <!-- TEXTO MASIVO DE FONDO (GAMING SUBIDO EN DESKTOP) -->
       <div class="absolute inset-0 z-0 flex items-center lg:items-start lg:pt-24 justify-center pointer-events-none select-none overflow-hidden">
         <h1 class="font-['Rajdhani'] font-black uppercase text-white/30 drop-shadow-[0_0_55px_rgba(255,255,255,0.22)] text-[22vw] sm:text-[26vw] lg:text-[30vw] leading-none tracking-tighter transition-all">
-          GAMING
+          PROJECT
         </h1>
       </div>
 
