@@ -3,13 +3,13 @@
     <MiniHero
       title="Instalaciones"
       bg-text="instalaciones"
-      description="Un local pensado para competir: setups de alto rendimiento, sala de torneos y un ambiente hecho por y para gamers."
+      description="Un local pensado para jugar en serio: setups de alto rendimiento y un ambiente hecho por y para gamers."
       icon-name="i-heroicons-building-storefront"
-      theme="white" 
+      theme="white"
       button-text="Reservar PC"
       button-link="#ubicacion"
-      secondary-button-text="Ver Torneos"
-      secondary-button-link="/torneos"
+      secondary-button-text="Instagram"
+      secondary-button-link="https://www.instagram.com/gamingproject.es/"
     />
 
     <!-- GALERÍA A PANTALLA COMPLETA (FULLWIDTH SIN MÁRGENES) -->

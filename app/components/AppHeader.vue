@@ -34,50 +34,6 @@
           Instalaciones
         </NuxtLink>
 
-        <div
-          class="relative"
-          @mouseenter="tournamentsMenuOpen = true"
-          @mouseleave="tournamentsMenuOpen = false"
-        >
-          <NuxtLink
-            to="/torneos"
-            class="px-5 py-2.5 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-800/60 transition-all duration-200 flex items-center gap-1.5 group"
-            active-class="!text-white font-extrabold bg-zinc-800/80 shadow-inner"
-          >
-            Torneos
-            <UIcon 
-              name="i-heroicons-chevron-down" 
-              class="w-4 h-4 text-zinc-500 group-hover:text-white transition-transform duration-300" 
-              :class="{ 'rotate-180 text-emerald-400': tournamentsMenuOpen }" 
-            />
-          </NuxtLink>
-
-          <Transition name="dropdown">
-            <div
-              v-if="tournamentsMenuOpen"
-              class="absolute top-full left-1/2 -translate-x-1/2 pt-4 w-56 z-50"
-            >
-              <div class="rounded-3xl border border-zinc-800 bg-zinc-950/95 backdrop-blur-2xl shadow-2xl p-2 space-y-1 overflow-hidden">
-                <NuxtLink
-                  to="/torneos/lol"
-                  class="flex items-center gap-3 px-4 py-3 rounded-2xl text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-200"
-                >
-                  <UIcon name="i-simple-icons-leagueoflegends" class="w-4 h-4 text-cyan-400 shrink-0" />
-                  <span class="text-sm font-bold tracking-wide">League of Legends</span>
-                </NuxtLink>
-
-                <NuxtLink
-                  to="/torneos/valorant"
-                  class="flex items-center gap-3 px-4 py-3 rounded-2xl text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-200"
-                >
-                  <UIcon name="i-simple-icons-valorant" class="w-4 h-4 text-rose-500 shrink-0" />
-                  <span class="text-sm font-bold tracking-wide">Valorant</span>
-                </NuxtLink>
-              </div>
-            </div>
-          </Transition>
-        </div>
-
         <NuxtLink
           to="/ranks"
           class="px-5 py-2.5 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-800/60 transition-all duration-200"
@@ -90,29 +46,12 @@
 
       <!-- BOTÓN PÍLDORA BLANCA DERECHA -->
       <div class="shrink-0 flex items-center">
-        
-        <template v-if="!isLoggedIn">
-          <NuxtLink
-            to="/admin"
-            class="px-6 py-2.5 rounded-full bg-white hover:bg-zinc-200 text-zinc-950 font-['Rajdhani'] font-black text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 hover:scale-105 active:scale-95 shadow-md flex items-center gap-2"
-          >
-            <span>Iniciar Sesión</span>
-          </NuxtLink>
-        </template>
 
         <NuxtLink
-          v-else
-          :to="user.role === 'admin' ? '/admin' : '/perfil'"
-          class="px-4 py-1.5 sm:px-5 sm:py-2 rounded-full bg-white hover:bg-zinc-100 text-zinc-950 font-['Rajdhani'] transition-all duration-200 hover:scale-105 active:scale-95 shadow-md flex items-center gap-3 group"
+          to="/instalaciones#ubicacion"
+          class="px-6 py-2.5 rounded-full bg-white hover:bg-zinc-200 text-zinc-950 font-['Rajdhani'] font-black text-xs sm:text-sm uppercase tracking-wider transition-all duration-200 hover:scale-105 active:scale-95 shadow-md flex items-center gap-2"
         >
-          <img 
-            :src="user.avatar" 
-            :alt="user.name" 
-            class="w-7 h-7 rounded-full object-cover border border-zinc-300"
-          >
-          <span class="font-extrabold text-xs sm:text-sm text-zinc-950 lowercase tracking-normal">
-            {{ user.email || user.name.toLowerCase().replace(/\s+/g, '') + '@gmail.com' }}
-          </span>
+          <span>Reservar</span>
         </NuxtLink>
 
         <!-- BOTÓN MÓVIL -->
@@ -128,6 +67,43 @@
 
     </div>
 
-    <!-- MENÚ MÓVIL DESPLEGABLE... (sin cambios) -->
+    <!-- MENÚ MÓVIL DESPLEGABLE -->
+    <Transition name="dropdown">
+      <nav
+        v-if="mobileMenuOpen"
+        class="pointer-events-auto md:hidden absolute top-full mt-3 w-56 rounded-3xl border border-zinc-800 bg-zinc-950/95 backdrop-blur-2xl shadow-2xl p-2 space-y-1 font-['Rajdhani'] text-sm font-bold tracking-wider uppercase"
+      >
+        <NuxtLink
+          to="/"
+          class="block px-4 py-3 rounded-2xl text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-200"
+          active-class="!text-white bg-zinc-800/80"
+          @click="mobileMenuOpen = false"
+        >
+          Inicio
+        </NuxtLink>
+        <NuxtLink
+          to="/instalaciones"
+          class="block px-4 py-3 rounded-2xl text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-200"
+          active-class="!text-white bg-zinc-800/80"
+          @click="mobileMenuOpen = false"
+        >
+          Instalaciones
+        </NuxtLink>
+        <NuxtLink
+          to="/ranks"
+          class="block px-4 py-3 rounded-2xl text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-200"
+          active-class="!text-white bg-zinc-800/80"
+          @click="mobileMenuOpen = false"
+        >
+          Ranking
+        </NuxtLink>
+      </nav>
+    </Transition>
   </header>
 </template>
+
+<script setup>
+import { ref } from 'vue'
+
+const mobileMenuOpen = ref(false)
+</script>

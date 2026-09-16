@@ -25,7 +25,7 @@
           ÚNETE A LA ARENA
         </h2>
         <p class="text-zinc-300 max-w-xl mx-auto text-sm sm:text-base font-sans font-light leading-relaxed">
-          Forma parte de la mayor comunidad gaming de Granada. Enterate de torneos, busca equipo en Discord o echa un vistazo al ambiente en nuestro Instagram.
+          Forma parte de la mayor comunidad gaming de Granada. Entérate de promociones, únete al Discord o echa un vistazo al ambiente en nuestro Instagram.
         </p>
       </div>
 

@@ -32,7 +32,7 @@
           </NuxtLink>
 
           <p class="text-base text-zinc-400 max-w-sm leading-relaxed font-light">
-            La arena definitiva para dominar en torneos competitivos de eSports. Compite, escala en los rankings y lleva a tu equipo a lo más alto.
+            El local gaming de referencia en Granada. Setups de alto rendimiento, ambiente único y todo lo que necesitas para jugar en serio.
           </p>
         </div>
 
@@ -43,15 +43,8 @@
           </h3>
           <ul class="space-y-3 font-['Rajdhani'] text-base font-bold uppercase tracking-wider">
             <li>
-              <NuxtLink to="/torneos/valorant" class="text-zinc-400 hover:text-white transition-colors duration-200 flex items-center gap-2">
-                <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
-                Valorant
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink to="/torneos/lol" class="text-zinc-400 hover:text-white transition-colors duration-200 flex items-center gap-2">
-                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
-                League of Legends
+              <NuxtLink to="/" class="text-zinc-400 hover:text-white transition-colors duration-200">
+                Inicio
               </NuxtLink>
             </li>
             <li>
@@ -73,7 +66,7 @@
             Comunidad
           </h3>
           <p class="text-sm text-zinc-400 font-light">
-            Sigue nuestros canales oficiales para enterarte de nuevos torneos, repartos de premios y retransmisiones en directo.
+            Sigue nuestros canales oficiales para enterarte de promociones, eventos y novedades del local.
           </p>
 
           <!-- Iconos Sociales Circulares -->

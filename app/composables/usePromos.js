@@ -10,11 +10,11 @@ const seedPromos = () => [
     badge: 'Entre semana'
   },
   {
-    id: 'promo-torneo-gratis',
-    title: 'Hora gratis al inscribirte',
-    description: 'Regístrate en cualquier torneo oficial y llévate 1 hora de PC gratis.',
+    id: 'promo-primera-hora',
+    title: 'Primera hora gratis',
+    description: 'Ven por primera vez y prueba nuestros setups con 1 hora de PC gratis.',
     icon: 'i-heroicons-gift',
-    badge: 'Torneos'
+    badge: 'Nuevos'
   },
   {
     id: 'promo-combo-duo',

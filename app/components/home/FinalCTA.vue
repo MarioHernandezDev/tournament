@@ -28,7 +28,7 @@
 
       <!-- DESCRIPCIÓN -->
       <p class="text-base sm:text-lg text-zinc-300 max-w-2xl mx-auto font-normal leading-relaxed">
-        Únete a jugadores, compite en torneos y escala en el ranking de la comunidad, siempre con nosotros.
+        Únete a la comunidad, juega con los mejores setups de la ciudad y vive el ambiente gamer, siempre con nosotros.
       </p>
 
       <!-- BOTONES DE ACCIÓN (MONOCROMO) -->

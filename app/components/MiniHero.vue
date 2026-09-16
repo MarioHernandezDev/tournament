@@ -118,19 +118,19 @@ const props = defineProps({
   },
   buttonText: {
     type: String,
-    default: 'Crear Torneo'
+    default: 'Reservar'
   },
   buttonLink: {
     type: String,
-    default: '/register'
+    default: '/instalaciones#ubicacion'
   },
   secondaryButtonText: {
     type: String,
-    default: 'Unirse a Torneo'
+    default: 'Ver más'
   },
   secondaryButtonLink: {
     type: String,
-    default: '#torneos'
+    default: '#'
   }
 })
 

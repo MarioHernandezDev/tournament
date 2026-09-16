@@ -8,9 +8,6 @@
     <!-- Horario + Precios -->
     <HomeScheduleAndPricing />
 
-    <!-- Sección Fullwidth: Valorant & LoL con fondo Blur + Promos -->
-    <HomeFeaturedGames />
-
     <HomeSponsorsRow />
 
     <!-- Redes Sociales -->

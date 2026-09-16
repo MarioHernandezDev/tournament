@@ -5,7 +5,7 @@ const seedGallery = () => [
   { id: 1, src: '/img/ezreal.png', alt: 'Zona gaming principal' },
   { id: 2, src: '/img/chamber.png', alt: 'Puesto de Valorant' },
   { id: 3, src: '/img/lol-hero.png', alt: 'Puesto de League of Legends' },
-  { id: 4, src: '/img/valorant-hero.png', alt: 'Sala de torneos' },
+  { id: 4, src: '/img/valorant-hero.png', alt: 'Sala de eventos' },
   { id: 5, src: '/img/ezreal.png', alt: 'Zona VIP & Streaming' },
   { id: 6, src: '/img/chamber.png', alt: 'Simuladores Cockpit' },
   { id: 7, src: '/img/lol-hero.png', alt: 'Zona Consolas PlayStation 5' },
