@@ -1,7 +1,7 @@
 <template>
   <section class="w-full bg-black text-zinc-100 font-sans relative overflow-hidden">
     
-    <!-- TRIÁNGULO EN DIAGONAL COMPLETO (Esq. Sup. Derecha a Esq. Inf. Izquierda) -->
+    <!-- TRIÁNGULO EN DIAGONAL COMPLETO -->
     <div 
       class="absolute inset-0 pointer-events-none z-0 bg-gradient-to-bl from-zinc-800/80 via-zinc-900/50 to-zinc-900/20"
       style="clip-path: polygon(100% 0, 100% 100%, 0 100%);"
@@ -73,15 +73,86 @@
         </div>
       </div>
 
-      <!-- ==================== 2. GRID DE FOTOS DE ZONAS ==================== -->
-      <div class="w-full">
-        <!-- TÍTULO CENTRADO VERTICALMENTE -->
-        <div class="w-full px-6 sm:px-12 lg:px-20 min-h-[35vh] sm:min-h-[45vh] lg:min-h-[50vh] flex flex-col items-center justify-center text-center">
+      <!-- ==================== 2. SECCIÓN DE TARIFAS Y PRECIOS HIGH-IMPACT ==================== -->
+      <div class="w-full px-4 sm:px-8 lg:px-20 pt-20 pb-16 space-y-12">
+        <div class="flex flex-col items-center text-center space-y-3">
+          
           <h2 class="font-['Rajdhani'] text-5xl sm:text-7xl font-black uppercase tracking-tight text-white leading-none">
-            NUESTRAS ZONAS
+            PRECIOS POR ZONA
           </h2>
+          <p class="text-zinc-400 text-sm sm:text-base max-w-2xl font-medium">
+            Tarifas transparentes adaptadas a cada configuración. Elige tu zona y salta a la partida.
+          </p>
         </div>
 
+        <!-- TARJETAS CON CORTE INDUSTRIAL (CLIP-PATH) -->
+        <div class="space-y-6 max-w-6xl mx-auto">
+          <div 
+            v-for="pricing in prices" 
+            :key="pricing.zone"
+            class="group relative bg-gradient-to-r from-zinc-950 via-zinc-900 to-zinc-950 border-y sm:border border-zinc-800 hover:border-cyan-400/80 p-6 sm:p-8 transition-all duration-300 shadow-2xl hover:shadow-[0_0_35px_rgba(34,211,238,0.2)] overflow-hidden"
+            style="clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));"
+          >
+            <!-- Detalle decorativo de esquina biselada -->
+            <div class="absolute top-0 right-0 w-4 h-4 bg-cyan-400/20 group-hover:bg-cyan-400 transition-colors" />
+
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+              
+              <!-- TÍTULO DE LA ZONA CON ESTILO HUD -->
+              <div class="lg:w-1/4 shrink-0 border-l-4 border-cyan-400 pl-4">
+                <h3 class="font-['Rajdhani'] text-3xl sm:text-4xl font-black uppercase tracking-wide text-white group-hover:text-cyan-400 transition-colors">
+                  {{ pricing.zone }}
+                </h3>
+             
+              </div>
+
+              <!-- BLOQUES DE PRECIOS CENTRADOS Y FLEXIBLES -->
+              <!-- BLOQUES DE PRECIOS FLEXIBLES Y ADAPTATIVOS -->
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3 flex-1 w-full">
+  <div 
+    v-for="tier in pricing.tiers" 
+    :key="tier.hours"
+    class="bg-black/80 border border-zinc-800 group-hover:border-zinc-700 p-2.5 sm:p-3 text-center flex flex-col justify-center items-center relative overflow-hidden transition-all duration-200 hover:border-cyan-400 hover:bg-zinc-900/90 w-full"
+  >
+    <span class="font-mono text-[10px] sm:text-[11px] text-zinc-400 font-bold uppercase tracking-wider mb-0.5 sm:mb-1">
+      {{ tier.hours }}
+    </span>
+    
+    <!-- Precio Gigante -->
+    <div class="font-['Rajdhani'] font-black text-2xl sm:text-3xl xl:text-4xl text-cyan-400 tracking-tight leading-none my-0.5 sm:my-1">
+      {{ tier.price }}<span class="text-lg sm:text-xl text-white">€</span>
+    </div>
+
+    <span v-if="tier.unitPrice" class="text-[9px] sm:text-[10px] font-mono text-zinc-500 font-bold">
+      {{ tier.unitPrice }}€/h
+    </span>
+  </div>
+</div>
+
+              <!-- BOTÓN INDUSTRIAL RESERVAR -->
+              <div class="shrink-0 flex items-center justify-end">
+                <NuxtLink
+                  to="/reservas"
+                  class="w-full sm:w-auto px-6 py-3 bg-cyan-400 hover:bg-cyan-300 text-zinc-950 font-['Rajdhani'] font-black text-sm uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(34,211,238,0.3)] hover:shadow-[0_0_30px_rgba(34,211,238,0.5)]"
+                  style="clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);"
+                >
+                  <span>Reservar Zona</span>
+                  <UIcon name="i-heroicons-arrow-right-20-solid" class="w-5 h-5" />
+                </NuxtLink>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEPARADOR ESTILO INDUSTRIAL -->
+      <div class="w-full px-6 sm:px-12 lg:px-20 flex items-center gap-6 my-12">
+        <div class="h-px bg-gradient-to-r from-transparent via-zinc-800 to-transparent flex-1" />
+      </div>
+
+      <!-- ==================== 3. GRID DE FOTOS DE ZONAS ==================== -->
+      <div class="w-full">
         <!-- GRID DE IMÁGENES -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 w-full">
           <div 
@@ -106,13 +177,13 @@
           </div>
         </div>
 
-        <!-- BOTÓN CON EXACTAMENTE EL MISMO ESTILO DEL HERO -->
+        <!-- BOTÓN DE NAVEGACIÓN A INSTALACIONES -->
         <div class="flex justify-center pt-16 sm:pt-20 px-6">
           <NuxtLink
-            to="/reservas"
+            to="/instalaciones"
             class="group relative inline-flex items-center justify-center gap-3 px-9 py-4 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-zinc-950 font-['Rajdhani'] font-black text-lg uppercase tracking-wider transition-all duration-300 shadow-xl shadow-cyan-500/25 hover:-translate-y-0.5 active:translate-y-0"
           >
-            <span>Ir a la Página de Reservas</span>
+            <span>Ver Instalaciones</span>
             <UIcon 
               name="i-heroicons-arrow-up-right" 
               class="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" 
@@ -122,11 +193,9 @@
       </div>
 
       <!-- SEPARADOR ESTILO INDUSTRIAL -->
-      <div class="w-full px-6 sm:px-12 lg:px-20 flex items-center gap-6 my-24 sm:my-32">
+      <div class="w-full px-6 sm:px-12 lg:px-20 flex items-center gap-6 my-24 sm:my-32"></div>
 
-      </div>
-
-      <!-- ==================== 3. HORARIOS ==================== -->
+      <!-- ==================== 4. HORARIOS ==================== -->
       <div class="w-full px-6 sm:px-12 lg:px-20 space-y-14 sm:space-y-16">
         <div class="flex flex-col items-start space-y-4 border-l-2 border-cyan-400 pl-6 sm:pl-8">
           <h2 class="font-['Rajdhani'] text-5xl sm:text-7xl font-black uppercase tracking-tight text-white leading-none">
@@ -140,7 +209,6 @@
             :key="entry.days"
             class="relative bg-zinc-950/90 border border-cyan-500/30 p-8 sm:p-10 transition-all duration-300 group hover:border-cyan-400 hover:bg-cyan-950/20 hover:shadow-[0_0_25px_rgba(34,211,238,0.15)]"
           >
-            <!-- Línea superior resplandeciente -->
             <div class="absolute top-0 left-6 right-6 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
             
             <div class="flex items-center justify-between mb-8">
@@ -189,6 +257,49 @@ const activeModalZone = ref(null)
 const videoRef = ref(null)
 const isPlaying = ref(true)
 const isMuted = ref(true)
+
+const prices = ref([
+  {
+    zone: 'PRINCIPAL',
+    subtitle: 'PC Gaming High-End (240Hz / RTX)',
+    tiers: [
+      { hours: '1 HORAS', price: '3.5', unitPrice: '3.50' },
+      { hours: '2 HORAS', price: '6', unitPrice: '3.00' },
+      { hours: '4 HORAS', price: '10', unitPrice: '2.50' },
+      { hours: '10 HORAS', price: '20', unitPrice: '2.00' },
+      { hours: '24 HORAS', price: '40', unitPrice: '1.66' }
+    ]
+  },
+  {
+    zone: 'VIP',
+    subtitle: 'Zonas privadas eSports Premium',
+    tiers: [
+      { hours: '1 HORAS', price: '4', unitPrice: '4.00' },
+      { hours: '2 HORAS', price: '7', unitPrice: '3.50' },
+      { hours: '4 HORAS', price: '12', unitPrice: '3.00' },
+      { hours: '10 HORAS', price: '25', unitPrice: '2.50' },
+      { hours: '25 HORAS', price: '50', unitPrice: '2.00' }
+    ]
+  },
+  {
+    zone: 'PS5',
+    subtitle: 'Consolas 4K + Mandos DualSense',
+    tiers: [
+      { hours: '1 HORAS', price: '4.5', unitPrice: '4.50' },
+      { hours: '2 HORAS', price: '8', unitPrice: '4.00' },
+      { hours: '3 HORAS', price: '10.5', unitPrice: '3.50' }
+    ]
+  },
+  {
+    zone: 'SIMULADOR COCHES',
+    subtitle: 'Cockpit completo Fanatec + VR',
+    tiers: [
+      { hours: '1 HORAS', price: '4.5', unitPrice: '4.50' },
+      { hours: '2 HORAS', price: '8', unitPrice: '4.00' },
+      { hours: '3 HORAS', price: '10.5', unitPrice: '3.50' }
+    ]
+  }
+])
 
 const schedule = ref({
   hours: [

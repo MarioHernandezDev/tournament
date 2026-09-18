@@ -50,7 +50,7 @@
 
           <div class="flex items-center justify-center sm:justify-start gap-3 pt-2">
             <NuxtLink
-              to="/instalaciones#ubicacion"
+              to="/reservas"
               class="group relative inline-flex items-center justify-center gap-3 px-9 py-4 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-zinc-950 font-['Rajdhani'] font-black text-lg uppercase tracking-wider transition-all duration-300 shadow-xl shadow-cyan-500/25 hover:-translate-y-0.5 active:translate-y-0 w-full sm:w-auto"
             >
               <span>Reservar PC</span>

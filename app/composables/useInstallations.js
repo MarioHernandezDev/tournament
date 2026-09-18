@@ -2,14 +2,14 @@
  * Datos del local: galería de fotos, specs de PCs y ubicación (mock).
  */
 const seedGallery = () => [
-  { id: 1, src: '/img/ezreal.png', alt: 'Zona gaming principal' },
-  { id: 2, src: '/img/chamber.png', alt: 'Puesto de Valorant' },
-  { id: 3, src: '/img/lol-hero.png', alt: 'Puesto de League of Legends' },
-  { id: 4, src: '/img/valorant-hero.png', alt: 'Sala de eventos' },
-  { id: 5, src: '/img/ezreal.png', alt: 'Zona VIP & Streaming' },
-  { id: 6, src: '/img/chamber.png', alt: 'Simuladores Cockpit' },
-  { id: 7, src: '/img/lol-hero.png', alt: 'Zona Consolas PlayStation 5' },
-  { id: 8, src: '/img/valorant-hero.png', alt: 'Recepción & Lounge Area' }
+  { id: 1, src: '/img/galeria1.jpg', alt: 'Zona gaming principal' },
+  { id: 2, src: '/img/galeria2.jpg', alt: 'Puesto de Valorant' },
+  { id: 3, src: '/img/galeria3.jpg', alt: 'Puesto de League of Legends' },
+  { id: 4, src: '/img/galeria4.jpg', alt: 'Sala de eventos' },
+  { id: 5, src: '/img/galeria5.jpg', alt: 'Zona VIP & Streaming' },
+  { id: 6, src: '/img/galeria6.jpg', alt: 'Simuladores Cockpit' },
+  { id: 7, src: '/img/galeria7.jpg', alt: 'Zona Consolas PlayStation 5' },
+  { id: 8, src: '/img/galeria8.jpg', alt: 'Recepción & Lounge Area' }
 ]
 
 const seedSpecs = () => [
