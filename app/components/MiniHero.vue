@@ -46,7 +46,7 @@
     </div>
 
     <!-- 5. CONTENIDO INTERACTIVO DE PRIMER PLANO -->
-    <div class="max-w-[1500px] mx-auto px-6 sm:px-12 lg:px-20 relative z-30 w-full flex flex-col lg:flex-row lg:items-end justify-between gap-8 sm:gap-10">
+    <div class="max-w-[1500px] mx-auto px-6 sm:px-12 lg:px-20 relative z-30 w-full">
       
       <!-- TITULAR CON ESCÁNER DE LUZ (SHIMMER) Y DESCRIPCIÓN -->
       <div class="space-y-4 max-w-3xl">
@@ -57,28 +57,6 @@
         <p class="text-zinc-200 text-base sm:text-lg font-light leading-relaxed max-w-md drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
           {{ description }}
         </p>
-      </div>
-
-      <!-- BOTONES DE ACCIÓN (ESTILO PÍLDORA DEL HERO) -->
-      <div class="flex items-center gap-3 shrink-0 flex-wrap">
-        <a 
-          v-if="secondaryButtonText"
-          :href="secondaryButtonLink" 
-          class="inline-flex items-center justify-center px-7 py-4 rounded-full font-['Rajdhani'] font-bold text-sm uppercase tracking-wider text-zinc-300 hover:text-white bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-600 transition-all duration-300 backdrop-blur-md shadow-lg"
-        >
-          {{ secondaryButtonText }}
-        </a>
-
-        <NuxtLink 
-          :to="buttonLink" 
-          :class="actionButtonClass"
-        >
-          <span>{{ buttonText }}</span>
-          <UIcon 
-            name="i-heroicons-arrow-up-right" 
-            class="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" 
-          />
-        </NuxtLink>
       </div>
 
     </div>
@@ -113,22 +91,6 @@ const props = defineProps({
     type: String,
     default: 'blue',
     validator: (v) => ['red', 'blue', 'gold', 'emerald', 'white'].includes(v)
-  },
-  buttonText: {
-    type: String,
-    default: 'Reservar'
-  },
-  buttonLink: {
-    type: String,
-    default: '/instalaciones#ubicacion'
-  },
-  secondaryButtonText: {
-    type: String,
-    default: ''
-  },
-  secondaryButtonLink: {
-    type: String,
-    default: '#'
   }
 })
 
@@ -163,18 +125,6 @@ const ambientAuraClass = computed(() => {
     case 'emerald': return 'bg-emerald-500/20'
     case 'white': return 'bg-white/20'
     default: return 'bg-cyan-500/20'
-  }
-})
-
-const actionButtonClass = computed(() => {
-  const base = 'group relative inline-flex items-center justify-center gap-3 px-9 py-4 rounded-full font-["Rajdhani"] font-black text-lg uppercase tracking-wider transition-all duration-300 shadow-xl hover:-translate-y-0.5 active:translate-y-0 '
-  switch (props.theme) {
-    case 'red': return base + 'bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-400 hover:to-red-500 text-white shadow-rose-600/25'
-    case 'blue': return base + 'bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-zinc-950 shadow-cyan-500/25'
-    case 'gold': return base + 'bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-zinc-950 shadow-amber-500/25'
-    case 'emerald': return base + 'bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-zinc-950 shadow-emerald-500/25'
-    case 'white': return base + 'bg-gradient-to-r from-zinc-100 to-zinc-300 hover:from-white hover:to-zinc-200 text-zinc-950 shadow-white/25'
-    default: return base + 'bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-zinc-950 shadow-cyan-500/25'
   }
 })
 </script>

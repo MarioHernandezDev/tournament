@@ -11,9 +11,7 @@
 
       <!-- ENCABEZADO DE SECCIÓN -->
       <div class="flex flex-col items-start space-y-4 border-l-2 border-cyan-400 pl-6 sm:pl-8">
-        <span class="font-mono text-xs uppercase tracking-widest text-cyan-400">
-          HAZ CLIC PARA VER DETALLES
-        </span>
+
         <h2 class="font-['Rajdhani'] text-5xl sm:text-7xl font-black uppercase tracking-tight text-white leading-none">
           EQUIPAMIENTO DE ALTA GAMA
         </h2>
