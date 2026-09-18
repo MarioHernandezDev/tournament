@@ -23,6 +23,9 @@
       <!-- Agrega aquí otros componentes que requieran margen lateral -->
     </div>
 
+    <!-- SECCIÓN MINIMALISTA DE VÍDEOS -->
+    <InstallationsVideos />
+
     <div id="ubicacion">
       <InstallationsLocationMap />
     </div>

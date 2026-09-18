@@ -27,9 +27,7 @@
       <!-- FORMULARIO DE IDENTIFICACIÓN -->
       <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
         <div :class="activeStep === 'details' ? 'md:col-span-8' : 'md:col-span-12'" class="space-y-2">
-          <label class="block font-mono text-xs uppercase tracking-wider text-zinc-400">
-            Nombre de usuario  <span class="text-cyan-400">*</span>
-          </label>
+          
           <div class="relative">
             <UIcon name="i-heroicons-user" class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-cyan-400" />
             <input
