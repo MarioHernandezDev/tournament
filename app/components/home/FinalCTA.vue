@@ -3,9 +3,14 @@
     
     <!-- IMAGEN DE FONDO A PANTALLA COMPLETA CON OVERLAY -->
     <div class="absolute inset-0 z-0 select-none pointer-events-none">
-      <img 
-        src="~/assets/img/fotofrente.png" 
+      <AppImage 
+        src="/img/fotofrente.png" 
         alt="CTA Background" 
+        width="1536"
+        height="1024"
+        sizes="xs:1000px sm:1536px"
+        densities="x1"
+        quality="55"
         class="w-full h-full object-cover object-center filter brightness-30 contrast-125 scale-105 [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)]"
       />
       <!-- Gradientes neutros -->
@@ -71,7 +76,7 @@
 
       <!-- FORMULARIO DE CONTACTO (SOLO UI, SIN BACKEND) -->
       <div class="cta-form pt-14 max-w-xl mx-auto text-left">
-        <div class="rounded-3xl border border-zinc-800/80 bg-zinc-950/90 backdrop-blur-md p-6 sm:p-8 space-y-5">
+        <div class="rounded-3xl border border-zinc-800/80 bg-zinc-950/90 sm:backdrop-blur-md p-6 sm:p-8 space-y-5">
           <h3 class="font-['Rajdhani'] text-xl sm:text-2xl font-black uppercase tracking-wide text-white text-center">
             ¿Tienes dudas? Escríbenos
           </h3>
@@ -138,6 +143,11 @@ const ctaSectionRef = ref(null)
 const ctaCanvas = ref(null)
 let animationFrameId = null
 let gsapCtx = null
+let canvasObserver = null
+let resizeTimer = null
+let refreshTimer = null
+let removeCanvasListeners = null
+let isUnmounted = false
 
 onMounted(async () => {
   // Inicialización del Canvas de partículas
@@ -147,9 +157,29 @@ onMounted(async () => {
     let width = (canvas.width = canvas.offsetWidth)
     let height = (canvas.height = canvas.offsetHeight)
 
-    const particleCount = width < 768 ? 35 : 70
+    const isMobile = width < 768
+    const particleCount = isMobile ? 35 : 70
+    const maxDistance = isMobile ? 110 : 140
+    const maxDistanceSq = maxDistance * maxDistance
+    const LINE_BUCKETS = 12
+    const FRAME_MS = 1000 / 60
     const particles = []
-    const maxDistance = 140
+
+    // El brillo (shadowBlur) es muy caro por frame: se pinta una vez en un sprite y se reutiliza
+    const createSprite = (radius) => {
+      const pad = 24
+      const size = Math.ceil(radius * 2 + pad * 2)
+      const sprite = document.createElement('canvas')
+      sprite.width = sprite.height = size
+      const sctx = sprite.getContext('2d')
+      sctx.beginPath()
+      sctx.arc(size / 2, size / 2, radius, 0, Math.PI * 2)
+      sctx.fillStyle = 'rgba(255, 255, 255, 0.9)'
+      sctx.shadowBlur = 10
+      sctx.shadowColor = 'rgba(255, 255, 255, 1)'
+      sctx.fill()
+      return sprite
+    }
 
     class Particle {
       constructor() {
@@ -158,24 +188,20 @@ onMounted(async () => {
         this.vx = (Math.random() - 0.5) * 0.7
         this.vy = (Math.random() - 0.5) * 0.7
         this.radius = Math.random() * 2.2 + 1.2
+        this.sprite = createSprite(this.radius)
+        this.half = this.sprite.width / 2
       }
 
-      update() {
-        this.x += this.vx
-        this.y += this.vy
+      update(step) {
+        this.x += this.vx * step
+        this.y += this.vy * step
 
         if (this.x < 0 || this.x > width) this.vx *= -1
         if (this.y < 0 || this.y > height) this.vy *= -1
       }
 
       draw() {
-        ctx.beginPath()
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)'
-        ctx.shadowBlur = 10
-        ctx.shadowColor = 'rgba(255, 255, 255, 1)'
-        ctx.fill()
-        ctx.shadowBlur = 0
+        ctx.drawImage(this.sprite, this.x - this.half, this.y - this.half)
       }
     }
 
@@ -183,46 +209,96 @@ onMounted(async () => {
       particles.push(new Particle())
     }
 
-    const animate = () => {
+    // Las líneas se agrupan por transparencia: un solo trazo por grupo en vez de uno por línea
+    const buckets = Array.from({ length: LINE_BUCKETS }, () => [])
+    let lastTime = 0
+
+    const animate = (time) => {
+      animationFrameId = requestAnimationFrame(animate)
+
+      const delta = time - lastTime
+      if (delta < FRAME_MS - 2) return // máx. ~60fps aunque la pantalla sea de 120Hz
+      lastTime = time
+      const step = Math.min(delta, 50) / FRAME_MS
+
       ctx.clearRect(0, 0, width, height)
+      for (let b = 0; b < LINE_BUCKETS; b++) buckets[b].length = 0
 
       for (let i = 0; i < particles.length; i++) {
-        particles[i].update()
-        particles[i].draw()
+        const p = particles[i]
+        p.update(step)
+        p.draw()
 
         for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x
-          const dy = particles[i].y - particles[j].y
-          const dist = Math.sqrt(dx * dx + dy * dy)
+          const q = particles[j]
+          const dx = p.x - q.x
+          const dy = p.y - q.y
+          const distSq = dx * dx + dy * dy
 
-          if (dist < maxDistance) {
-            const alpha = (1 - dist / maxDistance) * 0.45
-            ctx.beginPath()
-            ctx.moveTo(particles[i].x, particles[i].y)
-            ctx.lineTo(particles[j].x, particles[j].y)
-            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`
-            ctx.lineWidth = 1.1
-            ctx.stroke()
+          if (distSq < maxDistanceSq) {
+            const strength = 1 - Math.sqrt(distSq) / maxDistance
+            const bucket = Math.min(LINE_BUCKETS - 1, Math.floor(strength * LINE_BUCKETS))
+            buckets[bucket].push(p.x, p.y, q.x, q.y)
           }
         }
       }
 
+      ctx.lineWidth = 1.1
+      for (let b = 0; b < LINE_BUCKETS; b++) {
+        const lines = buckets[b]
+        if (!lines.length) continue
+        ctx.strokeStyle = `rgba(255, 255, 255, ${((b + 0.5) / LINE_BUCKETS) * 0.45})`
+        ctx.beginPath()
+        for (let k = 0; k < lines.length; k += 4) {
+          ctx.moveTo(lines[k], lines[k + 1])
+          ctx.lineTo(lines[k + 2], lines[k + 3])
+        }
+        ctx.stroke()
+      }
+    }
+
+    const start = () => {
+      if (animationFrameId) return
+      lastTime = 0
       animationFrameId = requestAnimationFrame(animate)
     }
 
-    animate()
-
-    const handleResize = () => {
-      if (!canvas) return
-      width = canvas.width = canvas.offsetWidth
-      height = canvas.height = canvas.offsetHeight
+    const stop = () => {
+      if (!animationFrameId) return
+      cancelAnimationFrame(animationFrameId)
+      animationFrameId = null
     }
 
-    window.addEventListener('resize', handleResize)
+    // El bucle solo corre mientras la sección es visible y la pestaña está activa
+    let inView = false
+    const syncLoop = () => (inView && !document.hidden ? start() : stop())
+
+    canvasObserver = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting
+      syncLoop()
+    })
+    canvasObserver.observe(canvas)
+
+    const handleResize = () => {
+      clearTimeout(resizeTimer)
+      resizeTimer = setTimeout(() => {
+        width = canvas.width = canvas.offsetWidth
+        height = canvas.height = canvas.offsetHeight
+      }, 150)
+    }
+
+    window.addEventListener('resize', handleResize, { passive: true })
+    document.addEventListener('visibilitychange', syncLoop)
+
+    removeCanvasListeners = () => {
+      window.removeEventListener('resize', handleResize)
+      document.removeEventListener('visibilitychange', syncLoop)
+    }
   }
 
   // Animaciones de GSAP ScrollTrigger
   await nextTick()
+  if (isUnmounted) return
   gsap.registerPlugin(ScrollTrigger)
 
   gsapCtx = gsap.context(() => {
@@ -249,7 +325,7 @@ onMounted(async () => {
     createScrollAnimation('.cta-actions', '.cta-actions')
     createScrollAnimation('.cta-form', '.cta-form')
 
-    setTimeout(() => {
+    refreshTimer = setTimeout(() => {
       ScrollTrigger.refresh()
     }, 150)
 
@@ -257,7 +333,12 @@ onMounted(async () => {
 })
 
 onUnmounted(() => {
+  isUnmounted = true
   if (animationFrameId) cancelAnimationFrame(animationFrameId)
+  if (canvasObserver) canvasObserver.disconnect()
+  if (removeCanvasListeners) removeCanvasListeners()
+  clearTimeout(resizeTimer)
+  clearTimeout(refreshTimer)
   if (gsapCtx) gsapCtx.revert()
 })
 </script>

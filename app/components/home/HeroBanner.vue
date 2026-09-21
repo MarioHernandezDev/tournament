@@ -6,9 +6,14 @@
       
       <!-- 1. FOTO DE FONDO -->
       <div class="hero-bg absolute inset-0 z-0 pointer-events-none select-none">
-        <img 
+        <AppImage 
           src="/img/hero.jpg" 
           alt="Gaming Center Background" 
+          width="1500"
+          height="843"
+          sizes="xs:1500px"
+          densities="x1"
+          priority
           class="w-full h-full object-cover object-center opacity-70 filter brightness-95 contrast-105 transition-all duration-700"
         />
         <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent"></div>
@@ -27,9 +32,13 @@
 
       <!-- 4. PERSONAJE (Render 3D) -->
       <div class="hero-character absolute inset-x-0 bottom-0 sm:relative z-10 w-full flex items-end justify-center pointer-events-none overflow-hidden h-[55vh] sm:h-auto transform-gpu will-change-transform">
-        <img 
-          src="~/assets/img/fotofrente.png" 
+        <AppImage 
+          src="/img/fotofrente.png" 
           alt="Gaming Player" 
+          width="1536"
+          height="1024"
+          sizes="xs:720px sm:1536px"
+          priority
           class="character-img h-full sm:h-auto w-auto sm:w-full object-cover object-bottom filter brightness-105 contrast-110 drop-shadow-[0_25px_50px_rgba(0,0,0,0.95)] [mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)] transform-gpu"
         />
         <!-- Sombra en móvil para tapar el cuerpo y que el texto lea perfecto -->
@@ -65,9 +74,11 @@
 
         <!-- LADO DERECHO: LOGO PARA PC -->
         <div class="hero-logo hidden sm:flex items-center justify-center sm:justify-end w-full sm:w-auto pointer-events-auto shrink-0">
-          <img 
+          <AppImage 
             src="/img/logo.webp" 
             alt="Project Gaming Logo" 
+            width="520"
+            height="91"
             class="w-72 sm:w-[420px] lg:w-[520px] max-w-none h-auto object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.85)] opacity-95 hover:opacity-100 transition-all duration-300 hover:scale-105"
           />
         </div>

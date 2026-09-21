@@ -21,3 +21,8 @@
     transition-duration: 0.01ms;
   }
 }
+
+/* <picture> de @nuxt/image no participa en el layout: el <img> se comporta como hijo directo */
+picture {
+  display: contents;
+}

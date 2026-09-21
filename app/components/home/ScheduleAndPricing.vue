@@ -18,9 +18,12 @@
             @click="openModal(zone)"
             class="zone-card group relative w-full h-[400px] sm:h-[480px] overflow-hidden cursor-pointer border-b sm:border-b-0 sm:border-r border-zinc-900 last:border-none"
           >
-            <img 
+            <AppImage 
               :src="zone.image" 
               :alt="zone.name"
+              width="854"
+              height="480"
+              sizes="xs:711px sm:854px"
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out filter brightness-90 contrast-110"
             />
             
@@ -170,11 +173,14 @@
       <div 
         v-if="activeModalZone" 
         @click="closeModal"
-        class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-10 bg-black/95 backdrop-blur-md cursor-pointer"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-10 bg-black/95 sm:backdrop-blur-md cursor-pointer"
       >
-        <img 
+        <AppImage 
           :src="activeModalZone.image" 
           :alt="activeModalZone.name"
+          sizes="xs:640px sm:1500px"
+          densities="x1"
+          priority
           class="max-w-full max-h-full object-contain pointer-events-none shadow-2xl"
         />
       </div>
@@ -192,6 +198,7 @@ const sectionRef = ref(null)
 const activeModalZone = ref(null)
 
 let ctx
+let refreshTimer
 
 const prices = ref([
   {
@@ -297,7 +304,7 @@ onMounted(async () => {
     createScrollAnimation('.schedule-header', '.schedule-section')
     createScrollAnimation('.schedule-card', '.schedule-section')
 
-    setTimeout(() => {
+    refreshTimer = setTimeout(() => {
       ScrollTrigger.refresh()
     }, 150)
 
@@ -306,6 +313,7 @@ onMounted(async () => {
 
 onUnmounted(() => {
   window.removeEventListener('keydown', handleKeydown)
+  clearTimeout(refreshTimer)
   if (ctx) ctx.revert()
 })
 </script>

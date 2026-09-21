@@ -14,10 +14,12 @@
         <div class="max-w-7xl w-full mx-auto px-6 sm:px-8 lg:px-12 py-16 flex flex-col md:flex-row items-center justify-between gap-10">
           <div class="cat-media relative w-full md:w-1/2 h-72 md:h-auto flex items-center justify-center order-1">
             <div class="relative md:absolute md:-top-36 md:-bottom-20 w-full flex items-center justify-center pointer-events-none">
-              <img
+              <AppImage
                 src="/images/booking/console-ps5.png"
                 alt="PS5 & Xbox"
-                class="w-auto h-96 sm:h-[420px] md:h-[500px] max-w-none object-contain drop-shadow-[0_35px_35px_rgba(0,0,0,0.95)] transition-all duration-500 group-hover:scale-105"
+                width="1000"
+                height="500"
+                class="w-auto h-96 sm:h-[420px] md:h-[500px] max-w-none object-contain drop-shadow-[0_20px_22px_rgba(0,0,0,0.95)] md:drop-shadow-[0_35px_35px_rgba(0,0,0,0.95)] transition-all duration-500 group-hover:scale-105"
               />
             </div>
           </div>
@@ -44,7 +46,7 @@
 
         <!-- PANEL DESPLEGABLE CONSOLAS -->
         <Transition name="panel-expand">
-          <div v-if="expandedCategory === 'consoles'" class="panel-expand-outer w-full bg-zinc-950 rounded-t-[2.5rem] border-t border-zinc-800/60 relative z-20 backdrop-blur-xl -mt-6" @click.stop>
+          <div v-if="expandedCategory === 'consoles'" class="panel-expand-outer w-full bg-zinc-950 rounded-t-[2.5rem] border-t border-zinc-800/60 relative z-20 md:backdrop-blur-xl -mt-6" @click.stop>
             <div class="panel-expand-inner">
               <div class="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 py-12 sm:py-14 space-y-12">
 
@@ -139,10 +141,12 @@
 
           <div class="cat-media relative w-full md:w-1/2 h-72 md:h-auto flex items-center justify-center order-1 md:order-2">
             <div class="relative md:absolute md:-top-36 md:-bottom-20 w-full flex items-center justify-center pointer-events-none">
-              <img
+              <AppImage
                 src="/images/booking/pc-setup.png"
                 alt="PC Gaming Setup"
-                class="w-auto h-96 sm:h-[420px] md:h-[490px] max-w-none object-contain drop-shadow-[0_35px_35px_rgba(0,0,0,0.95)] transition-all duration-500 group-hover:scale-105"
+                width="1000"
+                height="500"
+                class="w-auto h-96 sm:h-[420px] md:h-[490px] max-w-none object-contain drop-shadow-[0_20px_22px_rgba(0,0,0,0.95)] md:drop-shadow-[0_35px_35px_rgba(0,0,0,0.95)] transition-all duration-500 group-hover:scale-105"
               />
             </div>
           </div>
@@ -150,7 +154,7 @@
 
         <!-- PANEL DESPLEGABLE MAPA PC -->
         <Transition name="panel-expand">
-          <div v-if="expandedCategory === 'pc'" class="panel-expand-outer w-full bg-zinc-950 rounded-t-[2.5rem] border-t border-zinc-800/60 relative z-20 backdrop-blur-xl -mt-6" @click.stop>
+          <div v-if="expandedCategory === 'pc'" class="panel-expand-outer w-full bg-zinc-950 rounded-t-[2.5rem] border-t border-zinc-800/60 relative z-20 md:backdrop-blur-xl -mt-6" @click.stop>
             <div class="panel-expand-inner">
               <div class="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 py-12 sm:py-14 space-y-12">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -287,10 +291,12 @@
         <div class="max-w-7xl w-full mx-auto px-6 sm:px-8 lg:px-12 py-16 flex flex-col md:flex-row items-center justify-between gap-10">
           <div class="cat-media relative w-full md:w-1/2 h-72 md:h-auto flex items-center justify-center order-1">
             <div class="relative md:absolute md:-top-36 md:-bottom-20 w-full flex items-center justify-center pointer-events-none">
-              <img
+              <AppImage
                 src="/images/booking/cockpit-sim.png"
                 alt="Simulador Pro"
-                class="w-auto h-96 sm:h-[420px] md:h-[500px] max-w-none object-contain drop-shadow-[0_35px_35px_rgba(0,0,0,0.95)] transition-all duration-500 group-hover:scale-105"
+                width="1000"
+                height="500"
+                class="w-auto h-96 sm:h-[420px] md:h-[500px] max-w-none object-contain drop-shadow-[0_20px_22px_rgba(0,0,0,0.95)] md:drop-shadow-[0_35px_35px_rgba(0,0,0,0.95)] transition-all duration-500 group-hover:scale-105"
               />
             </div>
           </div>
@@ -317,7 +323,7 @@
 
         <!-- PANEL DESPLEGABLE SIMULADORES -->
         <Transition name="panel-expand">
-          <div v-if="expandedCategory === 'simulators'" class="panel-expand-outer w-full bg-zinc-950 rounded-t-[2.5rem] border-t border-zinc-800/60 relative z-20 backdrop-blur-xl -mt-6" @click.stop>
+          <div v-if="expandedCategory === 'simulators'" class="panel-expand-outer w-full bg-zinc-950 rounded-t-[2.5rem] border-t border-zinc-800/60 relative z-20 md:backdrop-blur-xl -mt-6" @click.stop>
             <div class="panel-expand-inner">
               <div class="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 py-12 sm:py-14 space-y-12">
                 <div class="space-y-4">

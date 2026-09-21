@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     '@nuxtjs/supabase',
     '@nuxt/ui',
     '@nuxt/icon',
+    '@nuxt/image',
     '@nuxtjs/google-fonts'
   ],
 
@@ -22,6 +23,17 @@ export default defineNuxtConfig({
       callback: '/confirm',
       exclude: ['/', '/instalaciones', '/ranks']
     }
+  },
+
+  // Imágenes optimizadas: WebP con fallback al formato original (JPEG/PNG).
+  // AVIF pesa ~15 % menos pero tarda ~3 s por imagen en codificarse en un servidor Node sin CDN/prerender;
+  // para activarlo basta con format: ['avif', 'webp'] cuando el hosting cachee /_ipx (Vercel, Netlify, Cloudflare…).
+  image: {
+    quality: 65,
+    format: ['webp'],
+    densities: [1, 2],
+    screens: { xs: 320, sm: 640, md: 768, lg: 1024, xl: 1280, xxl: 1536, '2xl': 1920 },
+    ipx: { maxAge: 60 * 60 * 24 * 30 }
   },
 
   // Configuración de fuentes tipo eSports / Gaming
@@ -43,7 +55,7 @@ export default defineNuxtConfig({
         { name: 'viewport', content: 'width=device-width, initial-scale=1' }
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/img/logo.png' }
+        { rel: 'icon', type: 'image/png', href: '/img/favicon.png' }
       ]
     }
   }

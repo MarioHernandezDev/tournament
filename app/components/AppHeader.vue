@@ -2,13 +2,16 @@
   <header class="fixed top-3 sm:top-5 left-0 right-0 z-50 flex flex-col items-center px-3 sm:px-4 pointer-events-none">
     
     <!-- BARRA PRINCIPAL FLOTANTE -->
-    <div class="pointer-events-auto flex items-center justify-between gap-3 sm:gap-6 bg-zinc-950/85 border border-zinc-800/80 p-2 sm:p-2.5 px-4 sm:px-6 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.85)] backdrop-blur-2xl transition-all duration-300 w-full max-w-[calc(100vw-2rem)] sm:w-auto">
+    <div class="pointer-events-auto flex items-center justify-between gap-3 sm:gap-6 bg-zinc-950/85 border border-zinc-800/80 p-2 sm:p-2.5 px-4 sm:px-6 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.85)] backdrop-blur-md sm:backdrop-blur-2xl transition-all duration-300 w-full max-w-[calc(100vw-2rem)] sm:w-auto">
       
       <!-- ISOTIPO ALIENÍGENA (Más grande y muy separado en Desktop) -->
       <NuxtLink to="/" class="shrink-0 flex items-center mr-2 sm:mr-8 lg:mr-16 hover:scale-110 active:scale-95 transition-transform duration-200">
-        <img 
+        <AppImage 
           src="/img/logo.png" 
           alt="Gaming Project Logo" 
+          width="96"
+          height="80"
+          priority
           class="h-8 sm:h-10 w-auto object-contain filter drop-shadow-[0_0_12px_rgba(34,211,238,0.25)]"
         />
       </NuxtLink>
@@ -81,7 +84,7 @@
     >
       <nav
         v-if="mobileMenuOpen"
-        class="pointer-events-auto md:hidden mt-2 w-full max-w-[calc(100vw-2rem)] rounded-3xl border border-zinc-800/90 bg-zinc-950/95 backdrop-blur-2xl shadow-2xl p-3 space-y-1.5 font-['Rajdhani'] text-base font-bold tracking-wider uppercase text-center"
+        class="pointer-events-auto md:hidden mt-2 w-full max-w-[calc(100vw-2rem)] rounded-3xl border border-zinc-800/90 bg-zinc-950/95 backdrop-blur-md shadow-2xl p-3 space-y-1.5 font-['Rajdhani'] text-base font-bold tracking-wider uppercase text-center"
       >
         <NuxtLink
           to="/"

@@ -38,10 +38,12 @@
 
               <!-- FOTO SOBRESALIENDO EN 3D (POP-OUT EFFECT) -->
               <div class="absolute -top-24 sm:-top-28 left-0 right-0 h-80 sm:h-96 flex items-center justify-center pointer-events-none z-20">
-                <img 
+                <AppImage 
                   :src="card.image" 
                   :alt="card.title" 
-                  class="w-auto h-full max-w-none object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.95)] transition-transform duration-500 group-hover:scale-105"
+                  width="768"
+                  height="384"
+                  class="w-auto h-full max-w-none object-contain drop-shadow-[0_15px_22px_rgba(0,0,0,0.95)] md:drop-shadow-[0_25px_35px_rgba(0,0,0,0.95)] transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
 

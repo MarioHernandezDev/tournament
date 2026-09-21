@@ -54,7 +54,7 @@
             />
 
             <!-- NOTAS Y CONFIRMACIÓN -->
-            <div class="bg-zinc-950/80 border border-zinc-800/80 rounded-3xl p-6 sm:p-8 backdrop-blur-md space-y-4 shadow-2xl">
+            <div class="bg-zinc-950/80 border border-zinc-800/80 rounded-3xl p-6 sm:p-8 sm:backdrop-blur-md space-y-4 shadow-2xl">
               <div class="flex items-center gap-3">
                 <span class="w-8 h-8 rounded-lg bg-cyan-400/10 border border-cyan-400/40 text-cyan-400 font-mono font-bold flex items-center justify-center text-sm">04</span>
                 <h3 class="font-['Rajdhani'] text-2xl font-black uppercase text-white tracking-wide">

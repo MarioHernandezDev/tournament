@@ -4,8 +4,13 @@
     <!-- 1. FOTO DE FONDO CON TRANSICIÓN -->
     <Transition name="fade" mode="out-in">
       <div :key="bgBanner" class="mh-bg absolute inset-0 z-0 pointer-events-none select-none">
-        <img 
+        <AppImage 
           :src="bgBanner" 
+          width="1500"
+          height="843"
+          sizes="xs:1500px"
+          densities="x1"
+          priority
           class="w-full h-full object-cover object-center opacity-70 filter brightness-95 contrast-105 transition-all duration-700"
           alt="Game Scene Background"
         />
@@ -16,7 +21,7 @@
 
     <!-- 2. AURA AMBIENTAL PULSANTE (RESPIRACIÓN) -->
     <div 
-      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] sm:w-[900px] h-[400px] blur-[160px] rounded-full pointer-events-none z-10 opacity-30 animate-pulse duration-10000"
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] sm:w-[900px] h-[400px] blur-[100px] sm:blur-[160px] rounded-full pointer-events-none z-10 opacity-30 animate-pulse duration-10000"
       :class="ambientAuraClass"
     />
 
@@ -36,10 +41,13 @@
       class="absolute inset-y-0 right-0 z-20 w-full md:w-3/4 lg:w-3/5 pointer-events-none select-none overflow-hidden flex items-end justify-end"
     >
       <div class="mh-character relative w-full h-full flex items-end justify-end [mask-image:linear-gradient(to_left,black_65%,transparent_100%)]">
-        <img 
+        <AppImage 
           :src="bgImage" 
           :alt="title" 
-          class="h-full w-auto max-w-none object-contain object-bottom object-right filter brightness-105 contrast-110 drop-shadow-[0_25px_50px_rgba(0,0,0,0.95)] transition-all duration-700 scale-100 animate-float"
+          sizes="xs:720px sm:1500px"
+          densities="x1"
+          priority
+          class="h-full w-auto max-w-none object-contain object-bottom object-right filter brightness-105 contrast-110 drop-shadow-[0_25px_50px_rgba(0,0,0,0.95)] transition-all duration-700 scale-100 animate-float transform-gpu will-change-transform"
         />
       </div>
       <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-zinc-950 to-transparent pointer-events-none" />
@@ -112,11 +120,11 @@ const props = defineProps({
 // Estilos dinámicos
 const bgTextGlowClass = computed(() => {
   switch (props.theme) {
-    case 'red': return 'text-rose-500/[0.08] drop-shadow-[0_0_90px_rgba(244,63,94,0.2)]'
-    case 'blue': return 'text-cyan-400/[0.09] drop-shadow-[0_0_90px_rgba(34,211,238,0.2)]'
-    case 'gold': return 'text-amber-500/[0.08] drop-shadow-[0_0_90px_rgba(251,191,36,0.2)]'
-    case 'emerald': return 'text-emerald-400/[0.08] drop-shadow-[0_0_90px_rgba(52,211,153,0.2)]'
-    case 'white': return 'text-white/[0.08] drop-shadow-[0_0_90px_rgba(255,255,255,0.2)]'
+    case 'red': return 'text-rose-500/[0.08] drop-shadow-[0_0_45px_rgba(244,63,94,0.2)] sm:drop-shadow-[0_0_90px_rgba(244,63,94,0.2)]'
+    case 'blue': return 'text-cyan-400/[0.09] drop-shadow-[0_0_45px_rgba(34,211,238,0.2)] sm:drop-shadow-[0_0_90px_rgba(34,211,238,0.2)]'
+    case 'gold': return 'text-amber-500/[0.08] drop-shadow-[0_0_45px_rgba(251,191,36,0.2)] sm:drop-shadow-[0_0_90px_rgba(251,191,36,0.2)]'
+    case 'emerald': return 'text-emerald-400/[0.08] drop-shadow-[0_0_45px_rgba(52,211,153,0.2)] sm:drop-shadow-[0_0_90px_rgba(52,211,153,0.2)]'
+    case 'white': return 'text-white/[0.08] drop-shadow-[0_0_45px_rgba(255,255,255,0.2)] sm:drop-shadow-[0_0_90px_rgba(255,255,255,0.2)]'
     default: return 'text-white/[0.08]'
   }
 })
@@ -168,7 +176,7 @@ const ambientAuraClass = computed(() => {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
 }
-.animate-float {
+:deep(.animate-float) {
   animation: float 5s ease-in-out infinite;
 }
 </style>

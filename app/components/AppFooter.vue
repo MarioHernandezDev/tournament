@@ -3,9 +3,12 @@
     
     <!-- ACCENTO DE FONDO Y GRADIENTE -->
     <div class="absolute inset-y-0 right-0 z-0 w-full sm:w-1/2 pointer-events-none select-none opacity-15 lg:opacity-25 flex items-end justify-end">
-      <img 
-        src="~/assets/img/fotofrente.png" 
+      <AppImage 
+        src="/img/fotofrente.png" 
         alt="Footer Accent" 
+        width="720"
+        height="480"
+        quality="50"
         class="h-full max-h-[480px] w-auto object-contain object-right-bottom filter brightness-75 drop-shadow-[0_0_50px_rgba(255,255,255,0.05)] [mask-image:linear-gradient(to_left,black_30%,transparent_100%)]"
       />
     </div>
@@ -19,9 +22,11 @@
         <div class="footer-col lg:col-span-5 space-y-6">
           <NuxtLink to="/" class="inline-flex items-center gap-3.5 group">
             <div class="w-12 h-12 rounded-full bg-black flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 transition-transform duration-300 overflow-hidden">
-              <img 
+              <AppImage 
                 src="/img/logo.png" 
                 alt="Logo" 
+                width="96"
+                height="80"
                 class="w-full h-full object-cover"
                 @error="(e) => e.target.style.display = 'none'"
               />
@@ -53,8 +58,9 @@
               </NuxtLink>
             </li>
             <li>
-              <NuxtLink to="/ranks" class="text-zinc-400 hover:text-white transition-colors duration-200">
-                Rankings Globales
+              <NuxtLink to="/reservas" class="text-cyan-400 hover:text-cyan-300 transition-colors duration-200 flex items-center gap-1.5">
+                <span>Reservar PC</span>
+                <UIcon name="i-heroicons-arrow-up-right" class="w-4 h-4" />
               </NuxtLink>
             </li>
           </ul>
@@ -116,6 +122,8 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
+
 const footerRef = ref(null)
 
 useScrollReveal(footerRef, ({ reveal, root }) => {

@@ -9,9 +9,12 @@
         class="gallery-item group relative aspect-[4/3] w-full overflow-hidden bg-zinc-950 border-b border-r border-zinc-900 cursor-pointer select-none"
       >
         <!-- Imagen en Grid -->
-        <img
+        <AppImage
           :src="photo.src"
           :alt="photo.alt || 'Instalaciones Gaming Project'"
+          width="1500"
+          height="843"
+          sizes="xs:851px sm:680px lg:640px"
           class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out filter brightness-90 group-hover:brightness-100"
         />
 
@@ -28,7 +31,7 @@
     <Transition name="fade">
       <div
         v-if="activeImageIndex !== null"
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md p-4 sm:p-8"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/95 sm:backdrop-blur-md p-4 sm:p-8"
         @click="closeLightbox"
       >
         <!-- Botón CERRAR (X) -->
@@ -53,9 +56,11 @@
           class="relative max-w-6xl max-h-[85vh] w-full h-full flex flex-col items-center justify-center"
           @click.stop
         >
-          <img
+          <AppImage
             :src="displayGallery[activeImageIndex].src"
             :alt="displayGallery[activeImageIndex].alt || 'Instalaciones Gaming Project'"
+            sizes="xs:640px sm:1152px"
+            priority
             class="max-w-full max-h-full object-contain rounded-lg border border-zinc-800 shadow-2xl"
           />
 

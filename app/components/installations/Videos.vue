@@ -37,7 +37,8 @@
               loop
               muted
               playsinline
-              autoplay
+              preload="none"
+              poster="/video/gameplay-demo-poster.webp"
               :src="video.src"
               @click="togglePlay(index)"
             />
@@ -102,7 +103,7 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 
 const sectionRef = ref(null)
 
@@ -115,12 +116,12 @@ const videos = [
   {
     title: 'GAMEPLAY DEMO',
     subtitle: 'Rendimiento Inmersivo 240Hz',
-    src: '/video/gameplay-demo.mp4'
+    src: '/video/gameplay-demo-web.mp4'
   },
   {
     title: 'NUESTRO LOCAL',
     subtitle: 'Ambiente & Setups Pro',
-    src: '/video/gameplay-demo.mp4'
+    src: '/video/gameplay-demo-web.mp4'
   }
 ]
 
@@ -135,6 +136,39 @@ const videoState = reactive(
 const setVideoRef = (el, index) => {
   if (el) videoRefs.value[index] = el
 }
+
+// El vídeo solo se descarga y reproduce mientras está en pantalla.
+let observer = null
+
+onMounted(() => {
+  observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const el = entry.target
+      const index = videoRefs.value.indexOf(el)
+      if (index === -1) return
+
+      if (entry.isIntersecting) {
+        if (videoState[index].isPlaying && el.paused) {
+          el.play().catch(() => { videoState[index].isPlaying = false })
+        }
+      } else if (!el.paused) {
+        el.pause()
+      }
+    })
+  }, { threshold: 0.25 })
+
+  videoRefs.value.forEach((el) => el && observer.observe(el))
+})
+
+onUnmounted(() => {
+  if (observer) observer.disconnect()
+  videoRefs.value.forEach((el) => {
+    if (!el) return
+    el.pause()
+    el.removeAttribute('src')
+    el.load()
+  })
+})
 
 const togglePlay = (index) => {
   const el = videoRefs.value[index]

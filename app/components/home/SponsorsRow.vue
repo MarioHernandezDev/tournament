@@ -67,6 +67,7 @@ const sponsors = [
   display: flex;
   width: max-content;
   animation: marquee 25s linear infinite;
+  will-change: transform;
 }
 
 /* Pausa el desplazamiento cuando el usuario pasa el ratón por encima */

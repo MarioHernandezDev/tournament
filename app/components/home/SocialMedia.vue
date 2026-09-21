@@ -3,14 +3,19 @@
     
     <!-- FOTO DE FONDO FULLWIDTH (Ambiente de la arena / Evento / Torneo) -->
     <div class="absolute inset-0 z-0">
-      <img 
+      <AppImage 
         src="/img/lol-hero.png" 
         alt="Gaming Project Arena Community" 
+        width="1920"
+        height="1080"
+        sizes="xs:1200px sm:1920px"
+        densities="x1"
+        quality="55"
         class="w-full h-full object-cover object-center filter brightness-50 contrast-125 scale-105"
       />
       <!-- Capas de degradado para integrarlo al tema negro eSports -->
       <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/80" />
-      <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
+      <div class="absolute inset-0 bg-black/40 sm:backdrop-blur-[2px]" />
     </div>
 
     <!-- Textura de cuadrícula sutil -->
@@ -74,6 +79,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const arenaSectionRef = ref(null)
 let ctx
+let refreshTimer
 
 onMounted(async () => {
   await nextTick()
@@ -103,7 +109,7 @@ onMounted(async () => {
     createScrollAnimation('.arena-header', '.arena-header')
     createScrollAnimation('.arena-buttons', '.arena-buttons')
 
-    setTimeout(() => {
+    refreshTimer = setTimeout(() => {
       ScrollTrigger.refresh()
     }, 150)
 
@@ -111,6 +117,7 @@ onMounted(async () => {
 })
 
 onUnmounted(() => {
+  clearTimeout(refreshTimer)
   if (ctx) ctx.revert()
 })
 </script>

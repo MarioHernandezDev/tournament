@@ -5,13 +5,18 @@ const CLEAR = 'opacity,transform,transition'
 
 export const useScrollReveal = (rootRef, setup) => {
   let ctx
+  let refreshTimer
+  let unmounted = false
 
   onMounted(async () => {
     await nextTick()
+    if (unmounted) return
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
     gsap.registerPlugin(ScrollTrigger)
+    // Evita recalcular todos los triggers cuando la barra del navegador móvil se oculta/muestra
+    ScrollTrigger.config({ ignoreMobileResize: true })
 
     ctx = gsap.context(() => {
       // Aparición sutil: fade + 15px, se dispara una sola vez al entrar en pantalla.
@@ -53,10 +58,12 @@ export const useScrollReveal = (rootRef, setup) => {
       setup({ gsap, ScrollTrigger, reveal, batch, root: rootRef?.value })
     }, rootRef?.value ?? undefined)
 
-    setTimeout(() => ScrollTrigger.refresh(), 150)
+    refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 150)
   })
 
   onUnmounted(() => {
+    unmounted = true
+    clearTimeout(refreshTimer)
     if (ctx) ctx.revert()
   })
 }

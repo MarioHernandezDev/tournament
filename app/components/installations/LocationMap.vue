@@ -18,7 +18,7 @@
 
       <!-- TARJETA FLOTANTE -->
       <div class="map-card absolute bottom-6 left-4 right-4 sm:left-8 sm:right-auto sm:max-w-md z-10">
-        <div class="bg-zinc-950/90 border border-zinc-800 p-6 rounded-2xl shadow-2xl backdrop-blur-md space-y-5">
+        <div class="bg-zinc-950/90 border border-zinc-800 p-6 rounded-2xl shadow-2xl sm:backdrop-blur-md space-y-5">
           
           <div class="space-y-1">
             <span class="text-[10px] font-mono text-cyan-400 uppercase tracking-widest block">

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-zinc-950/80 border border-zinc-800/80 rounded-2xl p-6 sm:p-8 backdrop-blur-md space-y-6">
+  <div class="bg-zinc-950/80 border border-zinc-800/80 rounded-2xl p-6 sm:p-8 sm:backdrop-blur-md space-y-6">
     <div class="flex items-center justify-between border-b border-zinc-800/80 pb-4">
       <div class="flex items-center gap-3">
         <span class="w-8 h-8 rounded-lg bg-cyan-400/10 border border-cyan-400/40 text-cyan-400 font-mono font-bold flex items-center justify-center text-sm">03</span>
