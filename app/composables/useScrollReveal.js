@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 const CLEAR = 'opacity,transform,transition'
 
 export const useScrollReveal = (rootRef, setup) => {
+  const isAppLoaded = useAppLoaded()
   let ctx
   let refreshTimer
   let unmounted = false
@@ -13,6 +14,10 @@ export const useScrollReveal = (rootRef, setup) => {
     if (unmounted) return
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    // Las animaciones de entrada esperan a que el preloader haya terminado
+    await waitForAppLoaded(isAppLoaded)
+    if (unmounted) return
 
     gsap.registerPlugin(ScrollTrigger)
     // Evita recalcular todos los triggers cuando la barra del navegador móvil se oculta/muestra

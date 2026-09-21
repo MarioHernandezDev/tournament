@@ -78,11 +78,16 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const arenaSectionRef = ref(null)
+const isAppLoaded = useAppLoaded()
 let ctx
 let refreshTimer
+let unmounted = false
 
 onMounted(async () => {
   await nextTick()
+  // Las animaciones de entrada esperan a que el preloader haya terminado
+  await waitForAppLoaded(isAppLoaded)
+  if (unmounted) return
 
   gsap.registerPlugin(ScrollTrigger)
 
@@ -117,6 +122,7 @@ onMounted(async () => {
 })
 
 onUnmounted(() => {
+  unmounted = true
   clearTimeout(refreshTimer)
   if (ctx) ctx.revert()
 })

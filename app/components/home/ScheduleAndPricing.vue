@@ -196,8 +196,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const sectionRef = ref(null)
 const activeModalZone = ref(null)
+const isAppLoaded = useAppLoaded()
 
 let ctx
+let unmounted = false
 let refreshTimer
 
 const prices = ref([
@@ -268,6 +270,9 @@ onMounted(async () => {
   window.addEventListener('keydown', handleKeydown)
 
   await nextTick()
+  // Las animaciones de entrada esperan a que el preloader haya terminado
+  await waitForAppLoaded(isAppLoaded)
+  if (unmounted) return
 
   gsap.registerPlugin(ScrollTrigger)
 
@@ -312,6 +317,7 @@ onMounted(async () => {
 })
 
 onUnmounted(() => {
+  unmounted = true
   window.removeEventListener('keydown', handleKeydown)
   clearTimeout(refreshTimer)
   if (ctx) ctx.revert()

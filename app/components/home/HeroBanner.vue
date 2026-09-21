@@ -96,15 +96,17 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const heroContainer = ref(null)
+const isAppLoaded = useAppLoaded()
 let ctx
+let stopWaiting
 
 onMounted(() => {
   gsap.registerPlugin(ScrollTrigger)
 
   ctx = gsap.context(() => {
 
-    // TIMELINE DE ENTRADA AL CARGAR
-    const tl = gsap.timeline({ defaults: { ease: 'power2.out', duration: 0.8 } })
+    // TIMELINE DE ENTRADA: en pausa hasta que el preloader termine (ver whenAppLoaded más abajo)
+    const tl = gsap.timeline({ paused: true, defaults: { ease: 'power2.out', duration: 0.8 } })
 
     tl.from('.hero-bg', { opacity: 0, duration: 1 })
       .from('.hero-aura', { opacity: 0, duration: 1.2 }, '-=0.8')
@@ -121,6 +123,9 @@ onMounted(() => {
       }, '-=0.7')
       
       .from('.hero-logo', { opacity: 0, duration: 0.8 }, '-=0.5')
+
+    // Arranca al terminar el preloader (al instante si ya estaba cargada la app, p. ej. navegación interna)
+    stopWaiting = whenAppLoaded(isAppLoaded, () => tl.play())
 
     // PARALLAX ULTRA-SUAVE (Acelerado por GPU)
     gsap.to('.hero-character', {
@@ -139,6 +144,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+  if (stopWaiting) stopWaiting()
   if (ctx) ctx.revert()
 })
 </script>
