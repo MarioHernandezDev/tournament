@@ -7,7 +7,7 @@
       <!-- ISOTIPO ALIENÍGENA (SIN REESCALADO HOVER) -->
       <NuxtLink to="/" class="shrink-0 flex items-center mr-2 sm:mr-8 lg:mr-16 opacity-90 hover:opacity-100 transition-opacity duration-200">
         <img 
-          src="/img/logo.webp" 
+          src="/img/logo.png" 
           alt="Gaming Project Logo" 
           class="h-8 sm:h-10 w-auto object-contain filter drop-shadow-[0_0_12px_rgba(34,211,238,0.25)]"
         />
