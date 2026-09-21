@@ -1,5 +1,5 @@
 <template>
-  <section class="relative w-full bg-black text-zinc-100 font-sans overflow-hidden py-24 sm:py-28 lg:py-32 px-6 sm:px-12 lg:px-20">
+  <section ref="sectionRef" class="relative w-full bg-black text-zinc-100 font-sans overflow-hidden py-24 sm:py-28 lg:py-32 px-6 sm:px-12 lg:px-20">
     
     <!-- TRIÁNGULO EN DIAGONAL COMPLETO DE FONDO -->
     <div 
@@ -10,7 +10,7 @@
     <div class="relative z-10 w-full max-w-[1500px] mx-auto space-y-20 sm:space-y-28">
 
       <!-- ENCABEZADO DE SECCIÓN -->
-      <div class="flex flex-col items-start space-y-4 border-l-2 border-cyan-400 pl-6 sm:pl-8">
+      <div class="specs-header flex flex-col items-start space-y-4 border-l-2 border-cyan-400 pl-6 sm:pl-8">
         <h2 class="font-['Rajdhani'] text-5xl sm:text-7xl font-black uppercase tracking-tight text-white leading-none">
           EQUIPAMIENTO DE ALTA GAMA
         </h2>
@@ -22,7 +22,7 @@
         <div 
           v-for="card in cards" 
           :key="card.id"
-          class="h-[520px] sm:h-[580px] lg:h-[620px] [perspective:1000px] cursor-pointer select-none relative"
+          class="spec-card h-[520px] sm:h-[580px] lg:h-[620px] [perspective:1000px] cursor-pointer select-none relative"
           @click="toggleCard(card.id)"
         >
           <div 
@@ -100,7 +100,7 @@
       </div>
 
       <!-- ================= BOTÓN CTA DE RESERVAS ================= -->
-      <div class="flex justify-center pt-6">
+      <div class="specs-cta flex justify-center pt-6">
         <NuxtLink
           to="/reservas"
           class="group relative inline-flex items-center justify-center gap-3 px-10 py-5 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-zinc-950 font-['Rajdhani'] font-black text-lg uppercase tracking-wider transition-all duration-300 shadow-xl shadow-cyan-500/25 hover:-translate-y-1 active:translate-y-0"
@@ -119,6 +119,14 @@
 
 <script setup>
 import { ref } from 'vue'
+
+const sectionRef = ref(null)
+
+useScrollReveal(sectionRef, ({ reveal, batch }) => {
+  reveal('.specs-header')
+  batch('.spec-card', { start: 'top 90%', stagger: 0.12 })
+  reveal('.specs-cta')
+})
 
 const flippedCards = ref([])
 

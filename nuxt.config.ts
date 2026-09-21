@@ -35,6 +35,7 @@ export default defineNuxtConfig({
 
   // Opciones de App / Head (Meta etiquetas para SEO)
   app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       title: 'Project Gaming | Torneos de Valorant & League of Legends',
       meta: [

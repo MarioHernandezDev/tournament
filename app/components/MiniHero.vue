@@ -1,9 +1,9 @@
 <template>
-  <header class="relative w-full bg-zinc-950 pt-16 pb-20 sm:pt-20 sm:pb-24 overflow-hidden min-h-[500px] lg:min-h-[580px] flex items-end">
+  <header ref="heroRef" class="relative w-full bg-zinc-950 pt-16 pb-20 sm:pt-20 sm:pb-24 overflow-hidden min-h-[500px] lg:min-h-[580px] flex items-end">
     
     <!-- 1. FOTO DE FONDO CON TRANSICIÓN -->
     <Transition name="fade" mode="out-in">
-      <div :key="bgBanner" class="absolute inset-0 z-0 pointer-events-none select-none">
+      <div :key="bgBanner" class="mh-bg absolute inset-0 z-0 pointer-events-none select-none">
         <img 
           :src="bgBanner" 
           class="w-full h-full object-cover object-center opacity-70 filter brightness-95 contrast-105 transition-all duration-700"
@@ -21,7 +21,7 @@
     />
 
     <!-- 3. TEXTO COLOSAL DE FONDO "PROJECT" / CUSTOM -->
-    <div class="absolute inset-0 z-10 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+    <div class="mh-bgtext absolute inset-0 z-10 flex items-center justify-center pointer-events-none select-none overflow-hidden">
       <h1 
         class="font-['Rajdhani'] font-black uppercase text-[25vw] sm:text-[28vw] lg:text-[32vw] leading-none tracking-tighter whitespace-nowrap select-none transition-all duration-700"
         :class="bgTextGlowClass"
@@ -35,7 +35,7 @@
       v-if="bgImage" 
       class="absolute inset-y-0 right-0 z-20 w-full md:w-3/4 lg:w-3/5 pointer-events-none select-none overflow-hidden flex items-end justify-end"
     >
-      <div class="relative w-full h-full flex items-end justify-end [mask-image:linear-gradient(to_left,black_65%,transparent_100%)]">
+      <div class="mh-character relative w-full h-full flex items-end justify-end [mask-image:linear-gradient(to_left,black_65%,transparent_100%)]">
         <img 
           :src="bgImage" 
           :alt="title" 
@@ -50,11 +50,11 @@
       
       <!-- TITULAR CON ESCÁNER DE LUZ (SHIMMER) Y DESCRIPCIÓN -->
       <div class="space-y-4 max-w-3xl">
-        <h2 class="font-['Rajdhani'] text-5xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight text-white leading-[0.95] drop-shadow-[0_10px_20px_rgba(0,0,0,0.9)]">
+        <h2 class="mh-text font-['Rajdhani'] text-5xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight text-white leading-[0.95] drop-shadow-[0_10px_20px_rgba(0,0,0,0.9)]">
           <span :class="titleGradientClass" class="animate-shimmer bg-[length:200%_auto]">{{ title }}</span>
         </h2>
         
-        <p class="text-zinc-200 text-base sm:text-lg font-light leading-relaxed max-w-md drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
+        <p class="mh-text text-zinc-200 text-base sm:text-lg font-light leading-relaxed max-w-md drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
           {{ description }}
         </p>
       </div>
@@ -64,7 +64,22 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+
+const heroRef = ref(null)
+
+useScrollReveal(heroRef, ({ gsap, root }) => {
+  const tl = gsap.timeline({ defaults: { ease: 'power2.out', duration: 0.8 } })
+
+  tl.from('.mh-bg', { opacity: 0, duration: 1, clearProps: 'opacity' })
+    .from('.mh-bgtext', { opacity: 0, duration: 1.2, clearProps: 'opacity' }, '-=0.8')
+
+  if (root.querySelector('.mh-character')) {
+    tl.from('.mh-character', { opacity: 0, x: 30, duration: 1, clearProps: 'opacity,transform' }, '-=1')
+  }
+
+  tl.from('.mh-text', { opacity: 0, y: 15, stagger: 0.12, clearProps: 'opacity,transform' }, '-=0.7')
+})
 
 const props = defineProps({
   title: {

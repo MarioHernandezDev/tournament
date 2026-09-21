@@ -1,18 +1,18 @@
 <template>
-  <div class="w-full space-y-12">
+  <div ref="sectionRef" class="w-full space-y-12">
 
     <div class="w-full space-y-12">
 
       <!-- CARD 1: CONSOLAS (PS5 & XBOX) -->
       <div
-        class="group relative w-full bg-zinc-950 border-y border-zinc-800/80 transition-all duration-500 hover:bg-zinc-900/40 min-h-[460px] flex flex-col justify-center overflow-visible cursor-pointer"
+        class="cat-card group relative w-full bg-zinc-950 border-y border-zinc-800/80 transition-all duration-500 hover:bg-zinc-900/40 min-h-[460px] flex flex-col justify-center overflow-visible cursor-pointer"
         :class="expandedCategory === 'consoles' ? 'bg-zinc-900/60 border-cyan-400/50' : ''"
         @click="toggleCategory('consoles')"
       >
         <div class="absolute inset-0 bg-gradient-to-r from-cyan-950/20 via-transparent to-blue-950/20 pointer-events-none" />
 
         <div class="max-w-7xl w-full mx-auto px-6 sm:px-8 lg:px-12 py-16 flex flex-col md:flex-row items-center justify-between gap-10">
-          <div class="relative w-full md:w-1/2 h-72 md:h-auto flex items-center justify-center order-1">
+          <div class="cat-media relative w-full md:w-1/2 h-72 md:h-auto flex items-center justify-center order-1">
             <div class="relative md:absolute md:-top-36 md:-bottom-20 w-full flex items-center justify-center pointer-events-none">
               <img
                 src="/images/booking/console-ps5.png"
@@ -22,7 +22,7 @@
             </div>
           </div>
 
-          <div class="relative z-10 w-full md:w-1/2 space-y-6 order-2 md:pl-8">
+          <div class="cat-info relative z-10 w-full md:w-1/2 space-y-6 order-2 md:pl-8">
             <h4 class="font-['Rajdhani'] text-3xl sm:text-4xl lg:text-5xl font-black uppercase text-white tracking-wide group-hover:text-cyan-400 transition-colors">
               PS5 & Xbox Series X
             </h4>
@@ -111,14 +111,14 @@
 
       <!-- CARD 2: PC GAMING -->
       <div
-        class="group relative w-full bg-zinc-950 border-y border-zinc-800/80 transition-all duration-500 hover:bg-zinc-900/40 min-h-[460px] flex flex-col justify-center overflow-visible cursor-pointer"
+        class="cat-card group relative w-full bg-zinc-950 border-y border-zinc-800/80 transition-all duration-500 hover:bg-zinc-900/40 min-h-[460px] flex flex-col justify-center overflow-visible cursor-pointer"
         :class="expandedCategory === 'pc' ? 'bg-zinc-900/60 border-cyan-400/50' : ''"
         @click="toggleCategory('pc')"
       >
         <div class="absolute inset-0 bg-gradient-to-l from-cyan-950/20 via-transparent to-blue-950/20 pointer-events-none" />
 
         <div class="max-w-7xl w-full mx-auto px-6 sm:px-8 lg:px-12 py-16 flex flex-col md:flex-row items-center justify-between gap-10">
-          <div class="relative z-10 w-full md:w-1/2 space-y-6 order-2 md:order-1 md:pr-8">
+          <div class="cat-info relative z-10 w-full md:w-1/2 space-y-6 order-2 md:order-1 md:pr-8">
             <h4 class="font-['Rajdhani'] text-3xl sm:text-4xl lg:text-5xl font-black uppercase text-white tracking-wide group-hover:text-cyan-400 transition-colors">
               PC Gaming
             </h4>
@@ -137,7 +137,7 @@
             </div>
           </div>
 
-          <div class="relative w-full md:w-1/2 h-72 md:h-auto flex items-center justify-center order-1 md:order-2">
+          <div class="cat-media relative w-full md:w-1/2 h-72 md:h-auto flex items-center justify-center order-1 md:order-2">
             <div class="relative md:absolute md:-top-36 md:-bottom-20 w-full flex items-center justify-center pointer-events-none">
               <img
                 src="/images/booking/pc-setup.png"
@@ -278,14 +278,14 @@
 
       <!-- CARD 3: SIMULADORES -->
       <div
-        class="group relative w-full bg-zinc-950 border-y border-zinc-800/80 transition-all duration-500 hover:bg-zinc-900/40 min-h-[460px] flex flex-col justify-center overflow-visible cursor-pointer"
+        class="cat-card group relative w-full bg-zinc-950 border-y border-zinc-800/80 transition-all duration-500 hover:bg-zinc-900/40 min-h-[460px] flex flex-col justify-center overflow-visible cursor-pointer"
         :class="expandedCategory === 'simulators' ? 'bg-zinc-900/60 border-cyan-400/50' : ''"
         @click="toggleCategory('simulators')"
       >
         <div class="absolute inset-0 bg-gradient-to-r from-amber-950/20 via-transparent to-cyan-950/20 pointer-events-none" />
 
         <div class="max-w-7xl w-full mx-auto px-6 sm:px-8 lg:px-12 py-16 flex flex-col md:flex-row items-center justify-between gap-10">
-          <div class="relative w-full md:w-1/2 h-72 md:h-auto flex items-center justify-center order-1">
+          <div class="cat-media relative w-full md:w-1/2 h-72 md:h-auto flex items-center justify-center order-1">
             <div class="relative md:absolute md:-top-36 md:-bottom-20 w-full flex items-center justify-center pointer-events-none">
               <img
                 src="/images/booking/cockpit-sim.png"
@@ -295,7 +295,7 @@
             </div>
           </div>
 
-          <div class="relative z-10 w-full md:w-1/2 space-y-6 order-2 md:pl-8">
+          <div class="cat-info relative z-10 w-full md:w-1/2 space-y-6 order-2 md:pl-8">
             <h4 class="font-['Rajdhani'] text-3xl sm:text-4xl lg:text-5xl font-black uppercase text-white tracking-wide group-hover:text-cyan-400 transition-colors">
               Simuladores Pro
             </h4>
@@ -387,6 +387,14 @@
 
 <script setup>
 import { ref } from 'vue'
+
+const sectionRef = ref(null)
+
+useScrollReveal(sectionRef, ({ gsap, reveal }) => {
+  gsap.utils.toArray('.cat-card').forEach((card) => {
+    reveal(card.querySelectorAll('.cat-media, .cat-info'), card, { stagger: 0.12 })
+  })
+})
 
 defineProps({
   whatsappUrlCustom: String

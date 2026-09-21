@@ -1,5 +1,5 @@
 <template>
-  <section class="relative w-full bg-black text-zinc-100 font-sans overflow-hidden py-20 sm:py-28 px-6 sm:px-12 lg:px-20">
+  <section ref="sectionRef" class="relative w-full bg-black text-zinc-100 font-sans overflow-hidden py-20 sm:py-28 px-6 sm:px-12 lg:px-20">
     
     <!-- TRIÁNGULO EN DIAGONAL COMPLETO DE FONDO -->
     <div 
@@ -10,7 +10,7 @@
     <div class="relative z-10 w-full max-w-[1500px] mx-auto space-y-12 sm:space-y-16">
 
       <!-- ENCABEZADO DE SECCIÓN -->
-      <div class="flex flex-col items-start space-y-4 border-l-2 border-cyan-400 pl-6 sm:pl-8">
+      <div class="videos-header flex flex-col items-start space-y-4 border-l-2 border-cyan-400 pl-6 sm:pl-8">
         <h2 class="font-['Rajdhani'] text-5xl sm:text-7xl font-black uppercase tracking-tight text-white leading-none">
           GAMEPLAY & ATMÓSFERA
         </h2>
@@ -22,7 +22,7 @@
         <div 
           v-for="(video, index) in videos" 
           :key="index"
-          class="group relative bg-zinc-950/90 border border-zinc-800/80 hover:border-cyan-400/80 p-3 sm:p-4 transition-all duration-300 shadow-2xl hover:shadow-[0_0_35px_rgba(34,211,238,0.2)] overflow-hidden"
+          class="video-card group relative bg-zinc-950/90 border border-zinc-800/80 hover:border-cyan-400/80 p-3 sm:p-4 transition-all duration-300 shadow-2xl hover:shadow-[0_0_35px_rgba(34,211,238,0.2)] overflow-hidden"
           style="clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));"
         >
           <!-- Detalle de esquina biselada estilo HUD -->
@@ -103,6 +103,13 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
+
+const sectionRef = ref(null)
+
+useScrollReveal(sectionRef, ({ reveal, batch }) => {
+  reveal('.videos-header')
+  batch('.video-card', { start: 'top 90%', stagger: 0.12 })
+})
 
 const videos = [
   {

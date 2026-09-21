@@ -1,5 +1,5 @@
 <template>
-  <section class="relative w-full py-24 sm:py-36 overflow-hidden bg-black  text-center">
+  <section ref="ctaSectionRef" class="relative w-full py-24 sm:py-36 overflow-hidden bg-black text-center">
     
     <!-- IMAGEN DE FONDO A PANTALLA COMPLETA CON OVERLAY -->
     <div class="absolute inset-0 z-0 select-none pointer-events-none">
@@ -22,17 +22,19 @@
     <div class="relative z-20 max-w-4xl mx-auto px-6 sm:px-10 space-y-8">
       
       <!-- TITULAR IMPACTANTE EN ESCALA DE GRISES -->
-      <h2 class="font-['Rajdhani'] text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight text-white leading-none">
-        Ven y disfruta en <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-300 to-zinc-500">el ciber de Granada</span>
-      </h2>
+      <div class="cta-header space-y-4">
+        <h2 class="font-['Rajdhani'] text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight text-white leading-none">
+          Ven y disfruta en <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-300 to-zinc-500">el ciber de Granada</span>
+        </h2>
 
-      <!-- DESCRIPCIÓN -->
-      <p class="text-base sm:text-lg text-zinc-300 max-w-2xl mx-auto font-normal leading-relaxed">
-        Únete a la comunidad, juega con los mejores setups de la ciudad y vive el ambiente gamer, siempre con nosotros.
-      </p>
+        <!-- DESCRIPCIÓN -->
+        <p class="text-base sm:text-lg text-zinc-300 max-w-2xl mx-auto font-normal leading-relaxed">
+          Únete a la comunidad, juega con los mejores setups de la ciudad y vive el ambiente gamer, siempre con nosotros.
+        </p>
+      </div>
 
       <!-- BOTONES DE ACCIÓN (MONOCROMO) -->
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-5 pt-6">
+      <div class="cta-actions flex flex-col sm:flex-row items-center justify-center gap-5 pt-6">
 
         <!-- Botón Principal: Reservar PC -->
         <NuxtLink
@@ -68,7 +70,7 @@
       </div>
 
       <!-- FORMULARIO DE CONTACTO (SOLO UI, SIN BACKEND) -->
-      <div class="pt-14 max-w-xl mx-auto text-left">
+      <div class="cta-form pt-14 max-w-xl mx-auto text-left">
         <div class="rounded-3xl border border-zinc-800/80 bg-zinc-950/90 backdrop-blur-md p-6 sm:p-8 space-y-5">
           <h3 class="font-['Rajdhani'] text-xl sm:text-2xl font-black uppercase tracking-wide text-white text-center">
             ¿Tienes dudas? Escríbenos
@@ -116,7 +118,9 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 // TODO Supabase: sustituir por un INSERT en la tabla `contact_messages` (name, email, message, created_at)
 const contactForm = reactive({ name: '', email: '', message: '' })
@@ -130,96 +134,130 @@ const handleContactSubmit = () => {
   setTimeout(() => { contactSent.value = false }, 2500)
 }
 
+const ctaSectionRef = ref(null)
 const ctaCanvas = ref(null)
 let animationFrameId = null
+let gsapCtx = null
 
-onMounted(() => {
+onMounted(async () => {
+  // Inicialización del Canvas de partículas
   const canvas = ctaCanvas.value
-  if (!canvas) return
+  if (canvas) {
+    const ctx = canvas.getContext('2d')
+    let width = (canvas.width = canvas.offsetWidth)
+    let height = (canvas.height = canvas.offsetHeight)
 
-  const ctx = canvas.getContext('2d')
-  let width = (canvas.width = canvas.offsetWidth)
-  let height = (canvas.height = canvas.offsetHeight)
+    const particleCount = width < 768 ? 35 : 70
+    const particles = []
+    const maxDistance = 140
 
-  // Configuración de red táctica de partículas
-  const particleCount = width < 768 ? 35 : 70
-  const particles = []
-  const maxDistance = 140
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width
+        this.y = Math.random() * height
+        this.vx = (Math.random() - 0.5) * 0.7
+        this.vy = (Math.random() - 0.5) * 0.7
+        this.radius = Math.random() * 2.2 + 1.2
+      }
 
-  class Particle {
-    constructor() {
-      this.x = Math.random() * width
-      this.y = Math.random() * height
-      this.vx = (Math.random() - 0.5) * 0.7
-      this.vy = (Math.random() - 0.5) * 0.7
-      this.radius = Math.random() * 2.2 + 1.2
-    }
+      update() {
+        this.x += this.vx
+        this.y += this.vy
 
-    update() {
-      this.x += this.vx
-      this.y += this.vy
+        if (this.x < 0 || this.x > width) this.vx *= -1
+        if (this.y < 0 || this.y > height) this.vy *= -1
+      }
 
-      if (this.x < 0 || this.x > width) this.vx *= -1
-      if (this.y < 0 || this.y > height) this.vy *= -1
-    }
-
-    draw() {
-      ctx.beginPath()
-      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)'
-      ctx.shadowBlur = 10
-      ctx.shadowColor = 'rgba(255, 255, 255, 1)'
-      ctx.fill()
-      ctx.shadowBlur = 0
-    }
-  }
-
-  // Inicializar partículas
-  for (let i = 0; i < particleCount; i++) {
-    particles.push(new Particle())
-  }
-
-  const animate = () => {
-    ctx.clearRect(0, 0, width, height)
-
-    // Dibujar líneas conectoras
-    for (let i = 0; i < particles.length; i++) {
-      particles[i].update()
-      particles[i].draw()
-
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x
-        const dy = particles[i].y - particles[j].y
-        const dist = Math.sqrt(dx * dx + dy * dy)
-
-        if (dist < maxDistance) {
-          const alpha = (1 - dist / maxDistance) * 0.45
-          ctx.beginPath()
-          ctx.moveTo(particles[i].x, particles[i].y)
-          ctx.lineTo(particles[j].x, particles[j].y)
-          ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`
-          ctx.lineWidth = 1.1
-          ctx.stroke()
-        }
+      draw() {
+        ctx.beginPath()
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)'
+        ctx.shadowBlur = 10
+        ctx.shadowColor = 'rgba(255, 255, 255, 1)'
+        ctx.fill()
+        ctx.shadowBlur = 0
       }
     }
 
-    animationFrameId = requestAnimationFrame(animate)
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle())
+    }
+
+    const animate = () => {
+      ctx.clearRect(0, 0, width, height)
+
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update()
+        particles[i].draw()
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x
+          const dy = particles[i].y - particles[j].y
+          const dist = Math.sqrt(dx * dx + dy * dy)
+
+          if (dist < maxDistance) {
+            const alpha = (1 - dist / maxDistance) * 0.45
+            ctx.beginPath()
+            ctx.moveTo(particles[i].x, particles[i].y)
+            ctx.lineTo(particles[j].x, particles[j].y)
+            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`
+            ctx.lineWidth = 1.1
+            ctx.stroke()
+          }
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(animate)
+    }
+
+    animate()
+
+    const handleResize = () => {
+      if (!canvas) return
+      width = canvas.width = canvas.offsetWidth
+      height = canvas.height = canvas.offsetHeight
+    }
+
+    window.addEventListener('resize', handleResize)
   }
 
-  animate()
+  // Animaciones de GSAP ScrollTrigger
+  await nextTick()
+  gsap.registerPlugin(ScrollTrigger)
 
-  const handleResize = () => {
-    if (!canvas) return
-    width = canvas.width = canvas.offsetWidth
-    height = canvas.height = canvas.offsetHeight
-  }
+  gsapCtx = gsap.context(() => {
+    const createScrollAnimation = (targets, triggerTarget) => {
+      gsap.fromTo(
+        targets,
+        { opacity: 0, y: 15 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.08,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: triggerTarget,
+            start: 'top 88%',
+            once: true
+          }
+        }
+      )
+    }
 
-  window.addEventListener('resize', handleResize)
+    createScrollAnimation('.cta-header', '.cta-header')
+    createScrollAnimation('.cta-actions', '.cta-actions')
+    createScrollAnimation('.cta-form', '.cta-form')
 
-  onUnmounted(() => {
-    window.removeEventListener('resize', handleResize)
-    if (animationFrameId) cancelAnimationFrame(animationFrameId)
-  })
+    setTimeout(() => {
+      ScrollTrigger.refresh()
+    }, 150)
+
+  }, ctaSectionRef.value)
+})
+
+onUnmounted(() => {
+  if (animationFrameId) cancelAnimationFrame(animationFrameId)
+  if (gsapCtx) gsapCtx.revert()
 })
 </script>

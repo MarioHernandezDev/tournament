@@ -1,5 +1,5 @@
 <template>
-  <section class="w-full relative overflow-hidden bg-zinc-950 border-t border-zinc-900 py-40 sm:py-56 lg:py-64">
+  <section ref="arenaSectionRef" class="w-full relative overflow-hidden bg-zinc-950 border-t border-zinc-900 py-40 sm:py-56 lg:py-64">
     
     <!-- FOTO DE FONDO FULLWIDTH (Ambiente de la arena / Evento / Torneo) -->
     <div class="absolute inset-0 z-0">
@@ -20,7 +20,7 @@
     <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center space-y-8">
 
       <!-- TÍTULO MONUMENTAL -->
-      <div class="space-y-4">
+      <div class="arena-header space-y-4">
         <h2 class="font-['Rajdhani'] text-5xl sm:text-7xl lg:text-8xl font-black uppercase tracking-tight text-white leading-none">
           ÚNETE A LA ARENA
         </h2>
@@ -30,7 +30,7 @@
       </div>
 
       <!-- BOTONES DE ACCIÓN (INSTAGRAM & DISCORD) -->
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+      <div class="arena-buttons flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
         
         <!-- BOTÓN INSTAGRAM -->
         <a 
@@ -68,5 +68,49 @@
 </template>
 
 <script setup>
-// No requiere lógica adicional
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+const arenaSectionRef = ref(null)
+let ctx
+
+onMounted(async () => {
+  await nextTick()
+
+  gsap.registerPlugin(ScrollTrigger)
+
+  ctx = gsap.context(() => {
+    const createScrollAnimation = (targets, triggerTarget) => {
+      gsap.fromTo(
+        targets,
+        { opacity: 0, y: 15 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: triggerTarget,
+            start: 'top 88%',
+            once: true
+          }
+        }
+      )
+    }
+
+    createScrollAnimation('.arena-header', '.arena-header')
+    createScrollAnimation('.arena-buttons', '.arena-buttons')
+
+    setTimeout(() => {
+      ScrollTrigger.refresh()
+    }, 150)
+
+  }, arenaSectionRef.value)
+})
+
+onUnmounted(() => {
+  if (ctx) ctx.revert()
+})
 </script>

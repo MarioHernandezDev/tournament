@@ -1,5 +1,5 @@
 <template>
-  <section class="w-full relative bg-zinc-950 m-0 p-0 overflow-hidden">
+  <section ref="sectionRef" class="w-full relative bg-zinc-950 m-0 p-0 overflow-hidden">
     
     <!-- CONTENEDOR DEL MAPA EN MODO DARK REAL -->
     <div class="w-full h-[450px] sm:h-[700px] relative overflow-hidden bg-black">
@@ -17,7 +17,7 @@
       <div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-zinc-950 via-zinc-950/70 to-transparent pointer-events-none" />
 
       <!-- TARJETA FLOTANTE -->
-      <div class="absolute bottom-6 left-4 right-4 sm:left-8 sm:right-auto sm:max-w-md z-10">
+      <div class="map-card absolute bottom-6 left-4 right-4 sm:left-8 sm:right-auto sm:max-w-md z-10">
         <div class="bg-zinc-950/90 border border-zinc-800 p-6 rounded-2xl shadow-2xl backdrop-blur-md space-y-5">
           
           <div class="space-y-1">
@@ -77,4 +77,10 @@
 
 <script setup>
 const { location } = useInstallations()
+
+const sectionRef = ref(null)
+
+useScrollReveal(sectionRef, ({ reveal }) => {
+  reveal('.map-card', '.map-card', { start: 'top 95%' })
+})
 </script>

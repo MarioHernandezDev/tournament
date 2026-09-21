@@ -1,5 +1,5 @@
 <template>
-  <section class="w-full bg-black text-zinc-100 font-sans relative overflow-hidden">
+  <section ref="sectionRef" class="w-full bg-black text-zinc-100 font-sans relative overflow-hidden">
     
     <!-- TRIÁNGULO EN DIAGONAL COMPLETO -->
     <div 
@@ -7,159 +7,16 @@
       style="clip-path: polygon(100% 0, 100% 100%, 0 100%);"
     />
 
-    <div class="relative z-10 w-full pb-20">
-      
-      <!-- ==================== 1. REPRODUCTOR DE VÍDEO GAMEPLAY ==================== -->
-      <div class="w-full space-y-4">
-        <div class="relative w-full h-[55vh] sm:h-[70vh] lg:h-[90vh] max-h-[90vh] bg-zinc-950 group shadow-2xl overflow-hidden">
-          
-          <video 
-            ref="videoRef"
-            class="w-full h-full object-cover cursor-pointer"
-            loop
-            muted
-            playsinline
-            autoplay
-            src="/video/gameplay-demo.mp4"
-            @click="togglePlay"
-          />
+    <div class="relative z-10 w-full pb-20 space-y-16 sm:space-y-20">
 
-          <!-- DEGRADADO SUPERIOR DE FUSIÓN CON EL HERO -->
-          <div class="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-black via-black/50 to-transparent pointer-events-none z-10" />
-
-          <!-- Overlay de Pausa -->
-          <div 
-            v-if="!isPlaying" 
-            @click="togglePlay"
-            class="absolute inset-0 bg-black/50 backdrop-blur-xs flex items-center justify-center cursor-pointer z-20 transition-opacity"
-          >
-            <div class="w-20 h-20 rounded-full bg-cyan-400 text-zinc-950 flex items-center justify-center shadow-[0_0_40px_rgba(34,211,238,0.5)] hover:scale-110 transition-transform">
-              <UIcon name="i-heroicons-play-20-solid" class="w-10 h-10 ml-1" />
-            </div>
-          </div>
-
-          <!-- Controles en Hover -->
-          <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6 sm:px-12 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-30">
-            <div class="flex items-center gap-4">
-              <button 
-                @click="togglePlay" 
-                class="w-10 h-10 rounded-full bg-white/10 hover:bg-white text-white hover:text-black flex items-center justify-center backdrop-blur-md transition-all cursor-pointer"
-                :aria-label="isPlaying ? 'Pausar' : 'Reproducir'"
-              >
-                <UIcon :name="isPlaying ? 'i-heroicons-pause-20-solid' : 'i-heroicons-play-20-solid'" class="w-5 h-5" />
-              </button>
-
-              <button 
-                @click="toggleMute" 
-                class="w-10 h-10 rounded-full bg-white/10 hover:bg-white text-white hover:text-black flex items-center justify-center backdrop-blur-md transition-all cursor-pointer"
-                :aria-label="isMuted ? 'Activar Sonido' : 'Silenciar'"
-              >
-                <UIcon :name="isMuted ? 'i-heroicons-speaker-x-mark-20-solid' : 'i-heroicons-speaker-wave-20-solid'" class="w-5 h-5" />
-              </button>
-
-              <span class="font-mono text-xs text-zinc-300 uppercase tracking-widest hidden sm:block">
-                PROJECT GAMING
-              </span>
-            </div>
-
-            <button 
-              @click="toggleFullScreen" 
-              class="w-10 h-10 rounded-full bg-white/10 hover:bg-white text-white hover:text-black flex items-center justify-center backdrop-blur-md transition-all cursor-pointer"
-              aria-label="Pantalla completa"
-            >
-              <UIcon name="i-heroicons-arrows-pointing-out-20-solid" class="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- ==================== 2. SECCIÓN DE TARIFAS Y PRECIOS HIGH-IMPACT ==================== -->
-      <div class="w-full px-4 sm:px-8 lg:px-20 pt-20 pb-16 space-y-12">
-        <div class="flex flex-col items-center text-center space-y-3">
-          
-          <h2 class="font-['Rajdhani'] text-5xl sm:text-7xl font-black uppercase tracking-tight text-white leading-none">
-            PRECIOS POR ZONA
-          </h2>
-          <p class="text-zinc-400 text-sm sm:text-base max-w-2xl font-medium">
-            Tarifas transparentes adaptadas a cada configuración. Elige tu zona y salta a la partida.
-          </p>
-        </div>
-
-        <!-- TARJETAS CON CORTE INDUSTRIAL (CLIP-PATH) -->
-        <div class="space-y-6 max-w-6xl mx-auto">
-          <div 
-            v-for="pricing in prices" 
-            :key="pricing.zone"
-            class="group relative bg-gradient-to-r from-zinc-950 via-zinc-900 to-zinc-950 border-y sm:border border-zinc-800 hover:border-cyan-400/80 p-6 sm:p-8 transition-all duration-300 shadow-2xl hover:shadow-[0_0_35px_rgba(34,211,238,0.2)] overflow-hidden"
-            style="clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));"
-          >
-            <!-- Detalle decorativo de esquina biselada -->
-            <div class="absolute top-0 right-0 w-4 h-4 bg-cyan-400/20 group-hover:bg-cyan-400 transition-colors" />
-
-            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
-              
-              <!-- TÍTULO DE LA ZONA CON ESTILO HUD -->
-              <div class="lg:w-1/4 shrink-0 border-l-4 border-cyan-400 pl-4">
-                <h3 class="font-['Rajdhani'] text-3xl sm:text-4xl font-black uppercase tracking-wide text-white group-hover:text-cyan-400 transition-colors">
-                  {{ pricing.zone }}
-                </h3>
-             
-              </div>
-
-              <!-- BLOQUES DE PRECIOS CENTRADOS Y FLEXIBLES -->
-              <!-- BLOQUES DE PRECIOS FLEXIBLES Y ADAPTATIVOS -->
-<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3 flex-1 w-full">
-  <div 
-    v-for="tier in pricing.tiers" 
-    :key="tier.hours"
-    class="bg-black/80 border border-zinc-800 group-hover:border-zinc-700 p-2.5 sm:p-3 text-center flex flex-col justify-center items-center relative overflow-hidden transition-all duration-200 hover:border-cyan-400 hover:bg-zinc-900/90 w-full"
-  >
-    <span class="font-mono text-[10px] sm:text-[11px] text-zinc-400 font-bold uppercase tracking-wider mb-0.5 sm:mb-1">
-      {{ tier.hours }}
-    </span>
-    
-    <!-- Precio Gigante -->
-    <div class="font-['Rajdhani'] font-black text-2xl sm:text-3xl xl:text-4xl text-cyan-400 tracking-tight leading-none my-0.5 sm:my-1">
-      {{ tier.price }}<span class="text-lg sm:text-xl text-white">€</span>
-    </div>
-
-    <span v-if="tier.unitPrice" class="text-[9px] sm:text-[10px] font-mono text-zinc-500 font-bold">
-      {{ tier.unitPrice }}€/h
-    </span>
-  </div>
-</div>
-
-              <!-- BOTÓN INDUSTRIAL RESERVAR -->
-              <div class="shrink-0 flex items-center justify-end">
-                <NuxtLink
-                  to="/reservas"
-                  class="w-full sm:w-auto px-6 py-3 bg-cyan-400 hover:bg-cyan-300 text-zinc-950 font-['Rajdhani'] font-black text-sm uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(34,211,238,0.3)] hover:shadow-[0_0_30px_rgba(34,211,238,0.5)]"
-                  style="clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);"
-                >
-                  <span>Reservar Zona</span>
-                  <UIcon name="i-heroicons-arrow-right-20-solid" class="w-5 h-5" />
-                </NuxtLink>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SEPARADOR ESTILO INDUSTRIAL -->
-      <div class="w-full px-6 sm:px-12 lg:px-20 flex items-center gap-6 my-12">
-        <div class="h-px bg-gradient-to-r from-transparent via-zinc-800 to-transparent flex-1" />
-      </div>
-
-      <!-- ==================== 3. GRID DE FOTOS DE ZONAS ==================== -->
-      <div class="w-full">
-        <!-- GRID DE IMÁGENES -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 w-full">
+      <!-- ==================== 1. GRID DE FOTOS DE ZONAS / INSTALACIONES ==================== -->
+      <div class="w-full space-y-10">
+        <div class="zones-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 w-full">
           <div 
             v-for="zone in schedule.zones" 
             :key="zone.id"
             @click="openModal(zone)"
-            class="group relative w-full h-[450px] sm:h-[550px] overflow-hidden cursor-pointer border-b sm:border-b-0 sm:border-r border-zinc-900 last:border-none"
+            class="zone-card group relative w-full h-[400px] sm:h-[480px] overflow-hidden cursor-pointer border-b sm:border-b-0 sm:border-r border-zinc-900 last:border-none"
           >
             <img 
               :src="zone.image" 
@@ -178,12 +35,12 @@
         </div>
 
         <!-- BOTÓN DE NAVEGACIÓN A INSTALACIONES -->
-        <div class="flex justify-center pt-16 sm:pt-20 px-6">
+        <div class="zones-btn flex justify-center pt-4 px-6">
           <NuxtLink
             to="/instalaciones"
             class="group relative inline-flex items-center justify-center gap-3 px-9 py-4 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-zinc-950 font-['Rajdhani'] font-black text-lg uppercase tracking-wider transition-all duration-300 shadow-xl shadow-cyan-500/25 hover:-translate-y-0.5 active:translate-y-0"
           >
-            <span>Ver Instalaciones</span>
+            <span>Ver Instalaciones Completas</span>
             <UIcon 
               name="i-heroicons-arrow-up-right" 
               class="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" 
@@ -193,11 +50,87 @@
       </div>
 
       <!-- SEPARADOR ESTILO INDUSTRIAL -->
-      <div class="w-full px-6 sm:px-12 lg:px-20 flex items-center gap-6 my-24 sm:my-32"></div>
+      <div class="w-full px-6 sm:px-12 lg:px-20 flex items-center gap-6">
+        <div class="h-px bg-gradient-to-r from-transparent via-zinc-800 to-transparent flex-1" />
+      </div>
 
-      <!-- ==================== 4. HORARIOS ==================== -->
-      <div class="w-full px-6 sm:px-12 lg:px-20 space-y-14 sm:space-y-16">
-        <div class="flex flex-col items-start space-y-4 border-l-2 border-cyan-400 pl-6 sm:pl-8">
+      <!-- ==================== 2. SECCIÓN DE TARIFAS Y PRECIOS ==================== -->
+      <div class="w-full px-4 sm:px-8 lg:px-20 space-y-12">
+        <div class="pricing-header flex flex-col items-center text-center space-y-3">
+          <h2 class="font-['Rajdhani'] text-5xl sm:text-7xl font-black uppercase tracking-tight text-white leading-none">
+            PRECIOS POR ZONA
+          </h2>
+          <p class="text-zinc-400 text-sm sm:text-base max-w-2xl font-medium">
+            Tarifas transparentes adaptadas a cada configuración. Elige tu zona y salta a la partida.
+          </p>
+        </div>
+
+        <!-- BANDA DE PRECIOS CONTINUA -->
+        <div class="pricing-container space-y-6 max-w-6xl mx-auto">
+          <div 
+            v-for="pricing in prices" 
+            :key="pricing.zone"
+            class="price-row group relative bg-gradient-to-r from-zinc-950 via-zinc-900/90 to-zinc-950 border-y sm:border border-zinc-800/80 hover:border-cyan-400/60 p-6 sm:p-8 transition-all duration-500 shadow-2xl overflow-hidden"
+            style="clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));"
+          >
+            <!-- Detalle decorativo de esquina biselada -->
+            <div class="absolute top-0 right-0 w-4 h-4 bg-cyan-400/20 group-hover:bg-cyan-400 transition-colors duration-300" />
+
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-8 relative z-10">
+              
+              <!-- TÍTULO DE LA ZONA -->
+              <div class="lg:w-1/4 shrink-0 border-l-4 border-cyan-400 pl-4">
+                <h3 class="font-['Rajdhani'] text-3xl sm:text-4xl font-black uppercase tracking-wide text-white group-hover:text-cyan-400 transition-colors">
+                  {{ pricing.zone }}
+                </h3>
+              </div>
+
+              <!-- BANDA CONTINUA INTEGRADA -->
+              <div class="flex-1 w-full overflow-x-auto no-scrollbar">
+                <div class="flex items-center divide-x divide-zinc-800/80 w-full min-w-[500px] lg:min-w-0">
+                  <div 
+                    v-for="tier in pricing.tiers" 
+                    :key="tier.hours"
+                    class="flex-1 px-4 py-2 text-center flex flex-col justify-center items-center group/item hover:bg-cyan-500/5 transition-colors duration-200"
+                  >
+                    <!-- HORAS -->
+                    <span class="font-['Rajdhani'] text-xs sm:text-sm text-zinc-400 font-bold uppercase tracking-wider mb-1 group-hover/item:text-cyan-300 transition-colors">
+                      {{ tier.hours }}
+                    </span>
+                    
+                    <!-- PRECIO GIGANTE -->
+                    <div class="font-['Rajdhani'] font-black text-4xl sm:text-5xl xl:text-6xl text-cyan-400 tracking-tight leading-none my-1 drop-shadow-[0_0_12px_rgba(34,211,238,0.25)]">
+                      {{ tier.price }}<span class="text-2xl sm:text-3xl text-white font-bold ml-0.5">€</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- BOTÓN INDUSTRIAL RESERVAR -->
+              <div class="shrink-0 flex items-center justify-end">
+                <NuxtLink
+                  to="/reservas"
+                  class="w-full sm:w-auto px-6 py-3.5 bg-cyan-400 hover:bg-cyan-300 text-zinc-950 font-['Rajdhani'] font-black text-sm uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(34,211,238,0.25)] hover:shadow-[0_0_30px_rgba(34,211,238,0.45)]"
+                  style="clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);"
+                >
+                  <span>Reservar Zona</span>
+                  <UIcon name="i-heroicons-arrow-right-20-solid" class="w-5 h-5" />
+                </NuxtLink>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEPARADOR ESTILO INDUSTRIAL -->
+      <div class="w-full px-6 sm:px-12 lg:px-20 flex items-center gap-6">
+        <div class="h-px bg-gradient-to-r from-transparent via-zinc-800 to-transparent flex-1" />
+      </div>
+
+      <!-- ==================== 3. HORARIOS ==================== -->
+      <div class="schedule-section w-full px-6 sm:px-12 lg:px-20 space-y-10">
+        <div class="schedule-header flex flex-col items-start space-y-4 border-l-2 border-cyan-400 pl-6 sm:pl-8">
           <h2 class="font-['Rajdhani'] text-5xl sm:text-7xl font-black uppercase tracking-tight text-white leading-none">
             NUESTRO HORARIO
           </h2>
@@ -207,7 +140,7 @@
           <div 
             v-for="entry in schedule.hours" 
             :key="entry.days"
-            class="relative bg-zinc-950/90 border border-cyan-500/30 p-8 sm:p-10 transition-all duration-300 group hover:border-cyan-400 hover:bg-cyan-950/20 hover:shadow-[0_0_25px_rgba(34,211,238,0.15)]"
+            class="schedule-card relative bg-zinc-950/90 border border-cyan-500/30 p-8 sm:p-10 transition-all duration-300 group hover:border-cyan-400 hover:bg-cyan-950/20 hover:shadow-[0_0_25px_rgba(34,211,238,0.15)]"
           >
             <div class="absolute top-0 left-6 right-6 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
             
@@ -219,7 +152,7 @@
             </div>
 
             <div class="space-y-3">
-              <h3 class="font-['Rajdhani'] text-2xl font-black uppercase tracking-wide text-cyan-400 group-hover:text-cyan-300 transition-colors">
+              <h3 class="font-['Rajdhani'] text-2xl font-black uppercase tracking-wide text-white-400 group-hover:text-cyan-300 transition-colors">
                 {{ entry.days }}
               </h3>
               <div class="font-mono text-3xl sm:text-4xl font-black text-white tracking-tight pt-2">
@@ -251,19 +184,21 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
+const sectionRef = ref(null)
 const activeModalZone = ref(null)
-const videoRef = ref(null)
-const isPlaying = ref(true)
-const isMuted = ref(true)
+
+let ctx
 
 const prices = ref([
   {
     zone: 'PRINCIPAL',
     subtitle: 'PC Gaming High-End (240Hz / RTX)',
     tiers: [
-      { hours: '1 HORAS', price: '3.5', unitPrice: '3.50' },
+      { hours: '1 HORA', price: '3.5', unitPrice: '3.50' },
       { hours: '2 HORAS', price: '6', unitPrice: '3.00' },
       { hours: '4 HORAS', price: '10', unitPrice: '2.50' },
       { hours: '10 HORAS', price: '20', unitPrice: '2.00' },
@@ -274,7 +209,7 @@ const prices = ref([
     zone: 'VIP',
     subtitle: 'Zonas privadas eSports Premium',
     tiers: [
-      { hours: '1 HORAS', price: '4', unitPrice: '4.00' },
+      { hours: '1 HORA', price: '4', unitPrice: '4.00' },
       { hours: '2 HORAS', price: '7', unitPrice: '3.50' },
       { hours: '4 HORAS', price: '12', unitPrice: '3.00' },
       { hours: '10 HORAS', price: '25', unitPrice: '2.50' },
@@ -285,16 +220,16 @@ const prices = ref([
     zone: 'PS5',
     subtitle: 'Consolas 4K + Mandos DualSense',
     tiers: [
-      { hours: '1 HORAS', price: '4.5', unitPrice: '4.50' },
+      { hours: '1 HORA', price: '4.5', unitPrice: '4.50' },
       { hours: '2 HORAS', price: '8', unitPrice: '4.00' },
       { hours: '3 HORAS', price: '10.5', unitPrice: '3.50' }
     ]
   },
   {
-    zone: 'SIMULADOR COCHES',
+    zone: 'SIMULADOR',
     subtitle: 'Cockpit completo Fanatec + VR',
     tiers: [
-      { hours: '1 HORAS', price: '4.5', unitPrice: '4.50' },
+      { hours: '1 HORA', price: '4.5', unitPrice: '4.50' },
       { hours: '2 HORAS', price: '8', unitPrice: '4.00' },
       { hours: '3 HORAS', price: '10.5', unitPrice: '3.50' }
     ]
@@ -315,30 +250,6 @@ const schedule = ref({
   ]
 })
 
-const togglePlay = () => {
-  if (!videoRef.value) return
-  if (videoRef.value.paused) {
-    videoRef.value.play()
-    isPlaying.value = true
-  } else {
-    videoRef.value.pause()
-    isPlaying.value = false
-  }
-}
-
-const toggleMute = () => {
-  if (!videoRef.value) return
-  videoRef.value.muted = !videoRef.value.muted
-  isMuted.value = videoRef.value.muted
-}
-
-const toggleFullScreen = () => {
-  if (!videoRef.value) return
-  if (videoRef.value.requestFullscreen) {
-    videoRef.value.requestFullscreen()
-  }
-}
-
 const openModal = (zone) => { activeModalZone.value = zone }
 const closeModal = () => { activeModalZone.value = null }
 
@@ -346,11 +257,68 @@ const handleKeydown = (e) => {
   if (e.key === 'Escape') closeModal()
 }
 
-onMounted(() => { window.addEventListener('keydown', handleKeydown) })
-onUnmounted(() => { window.removeEventListener('keydown', handleKeydown) })
+onMounted(async () => {
+  window.addEventListener('keydown', handleKeydown)
+
+  await nextTick()
+
+  gsap.registerPlugin(ScrollTrigger)
+
+  ctx = gsap.context(() => {
+    // Función optimizada para una aparición sutil y persistente (aparece una vez y se queda)
+    const createScrollAnimation = (targets, triggerTarget) => {
+      gsap.fromTo(
+        targets,
+        { opacity: 0, y: 15 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.08,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: triggerTarget,
+            start: 'top 88%',
+            once: true
+          }
+        }
+      )
+    }
+
+    // 1. INSTALACIONES
+    createScrollAnimation('.zone-card', '.zones-grid')
+    createScrollAnimation('.zones-btn', '.zones-btn')
+
+    // 2. PRECIOS
+    createScrollAnimation('.pricing-header', '.pricing-header')
+    createScrollAnimation('.price-row', '.pricing-container')
+
+    // 3. HORARIOS
+    createScrollAnimation('.schedule-header', '.schedule-section')
+    createScrollAnimation('.schedule-card', '.schedule-section')
+
+    setTimeout(() => {
+      ScrollTrigger.refresh()
+    }, 150)
+
+  }, sectionRef.value)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown)
+  if (ctx) ctx.revert()
+})
 </script>
 
 <style scoped>
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.25s ease;

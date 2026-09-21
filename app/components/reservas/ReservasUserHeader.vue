@@ -1,9 +1,9 @@
 <template>
-  <div class="w-full bg-zinc-950 border-y border-zinc-800/80 py-10 transition-all">
+  <div ref="sectionRef" class="w-full bg-zinc-950 border-y border-zinc-800/80 py-10 transition-all">
     <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 space-y-8">
       
       <!-- CABECERA DE PASO Y ACCIÓN WHATSAPP -->
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-zinc-900 pb-6">
+      <div class="uh-item flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-zinc-900 pb-6">
         <div class="space-y-1">
 
           <h2 class="font-['Rajdhani'] text-3xl sm:text-4xl font-black uppercase text-white tracking-wide">
@@ -25,7 +25,7 @@
       </div>
 
       <!-- FORMULARIO DE IDENTIFICACIÓN -->
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
+      <div class="uh-item grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
         <div :class="activeStep === 'details' ? 'md:col-span-8' : 'md:col-span-12'" class="space-y-2">
           
           <div class="relative">
@@ -58,6 +58,12 @@
 </template>
 
 <script setup>
+const sectionRef = ref(null)
+
+useScrollReveal(sectionRef, ({ reveal, root }) => {
+  reveal('.uh-item', root, { stagger: 0.1, start: 'top 92%' })
+})
+
 defineProps({
   username: String,
   activeStep: String,

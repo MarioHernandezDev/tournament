@@ -1,5 +1,5 @@
 <template>
-  <footer class="relative w-full bg-zinc-950 border-t border-zinc-900 pt-20 pb-12 overflow-hidden text-zinc-300">
+  <footer ref="footerRef" class="relative w-full bg-zinc-950 border-t border-zinc-900 pt-20 pb-12 overflow-hidden text-zinc-300">
     
     <!-- ACCENTO DE FONDO Y GRADIENTE -->
     <div class="absolute inset-y-0 right-0 z-0 w-full sm:w-1/2 pointer-events-none select-none opacity-15 lg:opacity-25 flex items-end justify-end">
@@ -16,7 +16,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-16">
         
         <!-- COLUMNA 1: BRANDING & LOGO CIRCULAR -->
-        <div class="lg:col-span-5 space-y-6">
+        <div class="footer-col lg:col-span-5 space-y-6">
           <NuxtLink to="/" class="inline-flex items-center gap-3.5 group">
             <div class="w-12 h-12 rounded-full bg-black flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 transition-transform duration-300 overflow-hidden">
               <img 
@@ -37,7 +37,7 @@
         </div>
 
         <!-- COLUMNA 2: NAVEGACIÓN -->
-        <div class="lg:col-span-3 space-y-5">
+        <div class="footer-col lg:col-span-3 space-y-5">
           <h3 class="font-['Rajdhani'] font-extrabold text-white text-lg uppercase tracking-wider">
             Explora
           </h3>
@@ -61,7 +61,7 @@
         </div>
 
         <!-- COLUMNA 3: COMUNIDAD Y REDES (PÍLDORAS) -->
-        <div class="lg:col-span-4 space-y-5">
+        <div class="footer-col lg:col-span-4 space-y-5">
           <h3 class="font-['Rajdhani'] font-extrabold text-white text-lg uppercase tracking-wider">
             Comunidad
           </h3>
@@ -104,7 +104,7 @@
       </div>
 
       <!-- COPYRIGHT Y BARRA INFERIOR -->
-      <div class="border-t border-zinc-900 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-zinc-500 font-light">
+      <div class="footer-col border-t border-zinc-900 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-zinc-500 font-light">
         <p>© 2026 Project Gaming. Todos los derechos reservados.</p>
         <p class="text-xs text-zinc-600">
           Project Gaming no está avalado por Riot Games ni por desarrolladores oficiales.
@@ -114,3 +114,11 @@
     </div>
   </footer>
 </template>
+
+<script setup>
+const footerRef = ref(null)
+
+useScrollReveal(footerRef, ({ reveal, root }) => {
+  reveal('.footer-col', root, { stagger: 0.1, start: 'top 92%' })
+})
+</script>

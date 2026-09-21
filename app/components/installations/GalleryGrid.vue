@@ -1,12 +1,12 @@
 <template>
-  <section class="w-full bg-black border-y border-zinc-900 overflow-hidden">
+  <section ref="sectionRef" class="w-full bg-black border-y border-zinc-900 overflow-hidden">
     <!-- REJILLA FULLWIDTH: 1 COL MÓVIL, 2 COL TABLET, 4 COL DESKTOP (2 FILAS DE 4 = 8 FOTOS) -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 w-full">
       <div
         v-for="(photo, index) in displayGallery"
         :key="photo.id || index"
         @click="openLightbox(index)"
-        class="group relative aspect-[4/3] w-full overflow-hidden bg-zinc-950 border-b border-r border-zinc-900 cursor-pointer select-none"
+        class="gallery-item group relative aspect-[4/3] w-full overflow-hidden bg-zinc-950 border-b border-r border-zinc-900 cursor-pointer select-none"
       >
         <!-- Imagen en Grid -->
         <img
@@ -83,6 +83,12 @@ const { gallery } = useInstallations()
 const displayGallery = computed(() => {
   const list = gallery?.value || gallery || []
   return list.slice(0, 8)
+})
+
+const sectionRef = ref(null)
+
+useScrollReveal(sectionRef, ({ batch }) => {
+  batch('.gallery-item', { start: 'top 94%', stagger: 0.07 })
 })
 
 const activeImageIndex = ref(null)
